@@ -1,0 +1,96 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #151515;
+    font-family: sans-serif;
+    color: #757575;
+}
+
+canvas {
+    display: block;
+    margin: auto;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+section {
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 2em;
+}
+
+#instructions {
+    float: left;
+    width: 200px;
+}
+
+#scorePanel {
+    float: right;
+    width: 200px;
+}
+
+#bulletHit {
+    float: left;
+    width: 200px;
+    padding-left: 20px;
+}
+
+    #score {
+        float: right;
+        color: white;
+    }
+
+#trollKills {
+    float: left;
+    width: 200px;
+    padding-left: 20px;
+}
+
+    #trollScore {
+        float: right;
+        color: white;
+    }
+
+.key {
+    color: #aaffdd;
+}
+
+#game-over, #game-over-overlay {
+    margin: auto;
+    width: 1200px;
+    height: 600px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: none;
+}
+
+#game-over-overlay {
+    background-color: black;
+    opacity: .5;
+}
+
+#game-over {
+    height: 200px;
+    text-align: center;
+    color: white;
+}
+
+#game-over h1 {
+    font-size: 3em;
+}
+
+#game-over button {
+    font-size: 1.5em;
+}
+
+#game-over button:hover {
+    border: 4px solid #000;
+}
