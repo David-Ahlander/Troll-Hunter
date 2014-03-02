@@ -56,7 +56,9 @@ resources.load([
     'img/blood.png',
     'img/wizard.png',
     'img/wizard2.png',
-    'img/background.png'
+    'img/background.png',
+	'img/IonShot.png'
+	
 ]);
 resources.onReady(init);
 
@@ -115,6 +117,8 @@ var trollsKilled = document.getElementById('trollScore');
 // Speed in pixels per second
 var playerSpeed = 200;
 var bulletSpeed = 800;
+
+var halfexplosionsprite = 20;
 
 // Update game objects
 function update(dt) {
@@ -202,28 +206,8 @@ function handleInput(dt) {
        Date.now() - lastFire > 100) {
         var x = player.pos[0] + player.sprite.size[0] / 2;
         var y = player.pos[1] + player.sprite.size[1] / 2;
-
-
-        if (player.sprite.pointedAt() == 'right') {
-            bullets.push({ pos: [x, y],
-                           dir: 'right',
-                           sprite: new Sprite('img/sprites.png', [0, 39], [42, 8]) });
-        }
-        if (player.sprite.pointedAt() == 'left') {
-            bullets.push({ pos: [x, y],
-                           dir: 'left',
-                           sprite: new Sprite('img/sprites.png', [51, 39], [42, 8]) });
-        }
-        if (player.sprite.pointedAt() == 'up') {
-            bullets.push({ pos: [x, y],
-                           dir: 'up',
-                           sprite: new Sprite('img/sprites.png', [104, 6], [8, 39]) });
-        }
-        if (player.sprite.pointedAt() == 'down') {
-            bullets.push({ pos: [x, y],
-                           dir: 'down',
-                           sprite: new Sprite('img/sprites.png', [113, 6], [8, 39]) });
-        }
+		
+		bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
 
         if (trollScore > 1) {
             bulletSpeed = 1500;
@@ -339,6 +323,7 @@ function checkCollisions() {
     checkPlayerBounds();
     checkHitTree();
     checkHitTroll();
+	bulletsHitTree();
     bulletsHitTroll();
 }
 
@@ -494,6 +479,44 @@ function bulletsHitTroll() {
             trollScore += 1;
         };
     });
+}
+
+function bulletsHitTree(){
+	// Check if bullets hit trees
+	var treepos = [];
+	
+	treepos.push(tree.pos);
+	treepos.push(tree2.pos);
+	
+    var treespritesize = tree.sprite.size;
+	
+
+    for(var j=0; j<bullets.length; j++) {
+        console.log("New loop");
+        var pos = bullets[j].pos;
+        var size = bullets[j].sprite.size;
+
+		for(var i=0;i<treepos.length;i++)
+        {
+			if(boxCollides(treepos[i], treespritesize, pos, size)) {
+			   // Add an explosion
+				explosions.push({
+					pos: pos,
+					sprite: new Sprite('img/sprites.png',
+									   [0, 116],
+									   [39, 40],
+									   20,
+									   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+									   null,
+									   true)
+				});
+				// Remove the bullet and stop this iteration
+				bullets.splice(j, 1);
+				return true;
+			}		
+		}
+        return false;
+    }
 }
 
 
