@@ -112,6 +112,8 @@ var gameTime = 0;
 var isGameOver;
 var terrainPattern;
 
+var numOfSpiders = 5;
+
 var score = 0;
 var scoreEl = document.getElementById('score');
 var trollScore = 0;
@@ -126,6 +128,9 @@ function update(dt) {
     gameTime += dt;
     handleInput(dt);
     if (troll) {trollMovement(dt)};
+	
+	spiderMovement(dt);
+	
     updateEntities(dt);
 
     // It gets harder over time by adding enemies using this
@@ -167,6 +172,7 @@ function moveEnemyRight(troll, dt) {
 
 function trollMovement(dt) {
     if (!troll) return;
+	
     var moveFunctions = [moveEnemyUp, moveEnemyDown, moveEnemyLeft, moveEnemyRight];
     
     var index = Math.floor(Math.random() * moveFunctions.length);
@@ -179,6 +185,47 @@ function trollMovement(dt) {
     }
 
     moveFunctions[troll.lastMovementIndex](troll, dt);
+}
+
+function spiderMovement(dt){
+	if(spiders.length < numOfSpiders)
+	{
+		addSpider();
+	}
+		
+	var moveFunctions = [moveEnemyUp, moveEnemyDown, moveEnemyLeft, moveEnemyRight];    
+    var index = Math.floor(Math.random() * moveFunctions.length);
+	
+	for(var i=0;i<spiders.length;i++)
+	{
+		var spider = spiders[i];
+		
+		 if (typeof spider.lastMovementIndex == "undefined" || spider.movementCount <= 0) {
+			spider.movementCount = 20;
+			spider.lastMovementIndex = index;
+		} else {
+			spider.movementCount--;
+		}
+
+		moveFunctions[spider.lastMovementIndex](spider, dt);
+	}
+}
+
+function addSpider(){
+	spiders.push({ 
+		pos: [cave.pos[0], cave.pos[1] ],
+		sprite: new Sprite('img/cave_spider.png', [0, 0], [31, 31]), 
+		hp: 1,
+		maxHp: 1,
+		delay: 500,
+		resetHp: function(){
+			this.hp = this.maxHp;
+		},
+		delay: function(){
+			this.delay;
+		},
+		speed: 300
+	});
 }
 
 function handleInput(dt) {
@@ -324,7 +371,9 @@ function checkCollisions() {
     checkPlayerBounds();
     checkHitTree();
     checkHitTroll();
+	checkHitSpiders();
 	bulletsHitTree();
+	bulletsHitSpiders();
     bulletsHitTroll();
 }
 
@@ -357,6 +406,24 @@ function checkPlayerBounds() {
     else if(troll && troll.pos[1] > canvas.height - troll.sprite.size[1]) {
         troll.pos[1] = canvas.height - troll.sprite.size[1];
     }
+	
+	for(var i=0;i<spiders.length;i++)
+	{
+		var spider = spiders[i];
+		if(spider && spider.pos[0] < 0) {
+			spider.pos[0] = 0;
+		}
+		else if(spider && spider.pos[0] > canvas.width - spider.sprite.size[0]) {
+			spider.pos[0] = canvas.width - spider.sprite.size[0];
+		}
+
+		if(spider && spider.pos[1] < 0) {
+			spider.pos[1] = 0;
+		}
+		else if(spider && spider.pos[1] > canvas.height - spider.sprite.size[1]) {
+			spider.pos[1] = canvas.height - spider.sprite.size[1];
+		}
+	}
 }
 
 // Draw everything
@@ -376,6 +443,8 @@ function render() {
     renderEntities(bullets);
     renderEntities(enemies);
     renderEntities(explosions);
+	
+	renderEntities(spiders);
 };
 
 function renderEntities(list) {
@@ -459,10 +528,19 @@ function checkHitTree() {
 
 function checkHitTroll() {
     // Unable player to walk through trees
-
     if(troll && boxCollides(player.pos, player.sprite.size, troll.pos, troll.sprite.size)) {
         gameOver();
     }
+}
+
+function checkHitSpiders(){
+	//Check if spiders catch Züper Alex
+	for(var i=0;i<spiders.length;i++){
+		var spider = spiders[i];
+		if(spider && boxCollides(player.pos, player.sprite.size, spider.pos, spider.sprite.size)) {
+			gameOver();
+		}
+	}
 }
 
 function bulletsHitTroll() {
@@ -493,7 +571,6 @@ function bulletsHitTree(){
 	
 
     for(var j=0; j<bullets.length; j++) {
-        console.log("New loop");
         var pos = bullets[j].pos;
         var size = bullets[j].sprite.size;
 
@@ -514,6 +591,44 @@ function bulletsHitTree(){
 				// Remove the bullet and stop this iteration
 				bullets.splice(j, 1);
 				return true;
+			}		
+		}
+        return false;
+    }
+}
+
+function bulletsHitSpiders(){
+	// Check if bullets hit trees
+	
+    var spidersize = spiders[0].sprite.size;
+	
+
+    for(var j=0; j<bullets.length; j++) {
+        console.log("New loop");
+        var pos = bullets[j].pos;
+        var size = bullets[j].sprite.size;
+
+		for(var i=0;i<spiders.length;i++)
+        {
+			if(boxCollides(spiders[i].pos, spidersize, pos, size)) {
+			   // Add an explosion
+				explosions.push({
+					pos: pos,
+					sprite: new Sprite('img/sprites.png',
+									   [0, 116],
+									   [39, 40],
+									   20,
+									   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+									   null,
+									   true)
+				});
+				// Remove the bullet and stop this iteration
+				bullets.splice(j, 1);
+				
+				spiders.splice(i,1);
+				
+				return true;
+				
 			}		
 		}
         return false;
