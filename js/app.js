@@ -68,18 +68,6 @@ var player = {
     sprite: new Sprite('img/wizard2.png', [110, 0], [55, 55])
 };
 
-    // tree: new Tree([0, 0], [0, 0], [120, 108],);
-
-var tree = {
-    pos: [0, 0],
-    sprite: new Sprite('img/tree.png', [0, 0], [120, 108])
-};
-
-var tree2 = {
-    pos: [0, 0],
-    sprite: new Sprite('img/tree.png', [0, 0], [120, 108])
-};
-
 var cave = {
     pos: [0, 0],
     sprite: new Sprite('img/cave.png', [0, 0], [210, 141])
@@ -106,6 +94,8 @@ var bullets = [];
 var enemies = [];
 var explosions = [];
 
+var trees = [];
+
 var lastFire = Date.now();
 var gameTime = 0;
 var isGameOver;
@@ -121,6 +111,11 @@ var trollsKilled = document.getElementById('trollScore');
 // Speed in pixels per second
 var playerSpeed = 200;
 var bulletSpeed = 800;
+
+// Add some trees
+trees.push(new Tree([0, 0]))
+trees.push(new Tree([0, 0]))
+trees.push(new Tree([0, 0]))
 
 // Update game objects
 function update(dt) {
@@ -274,8 +269,9 @@ function updateEntities(dt) {
     // Update the player sprite animation
     player.sprite.update(dt);
     troll && troll.sprite.update(dt);
-    tree.sprite.update(dt);
-    tree2.sprite.update(dt);
+    for (var n = 0; n < trees.length; n++) {
+        trees[n].sprite.update(dt);
+    }
     cave.sprite.update(dt);
 
     // Update all the bullets
@@ -368,7 +364,9 @@ function bulletsHitsEnemy(enemy, onHit) {
 
 function checkCollisions() {
     checkPlayerBounds();
-    checkHitTree();
+    for (var n = 0; n < trees.length; n++) {
+        checkHitTree(trees[n]);
+    }
     checkHitTroll();
     checkHitSpiders();
     bulletsHitTree();
@@ -434,8 +432,9 @@ function render() {
     if(!isGameOver) {
         renderEntity(cave);
         renderEntity(player);
-        renderEntity(tree);
-        renderEntity(tree2);
+        for (var n = 0; n < trees.length; n++) {
+            renderEntity(trees[n]);
+        }
         if (troll) {renderEntity(troll)};
     }
 
@@ -485,11 +484,13 @@ function reset() {
     player.pos = [50, canvas.height / 2];
     cave.pos = [590, canvas.height - 600];
     troll.pos = [500, canvas.height - 600];
-    tree.pos = [Math.random() * 680, Math.random() * 492];
-    tree2.pos = [Math.random() * 680, Math.random() * 492];
+
+    for (var n = 0; n < trees.length; n++) {
+        trees[n].randomizePosition();
+    }
 };
 
-function checkHitTree() {
+function checkHitTree(tree) {
     // Unable player to walk through trees
 
     if(boxCollides(player.pos, player.sprite.size, tree.pos, tree.sprite.size)) {
@@ -505,22 +506,6 @@ function checkHitTree() {
         }
         if (player.sprite.pointedAt() == 'left') {
             player.pos[0] = tree.pos[0] + 121;
-        }
-    }
-
-    if(boxCollides(player.pos, player.sprite.size, tree2.pos, tree2.sprite.size)) {
-
-        if (player.sprite.pointedAt() == 'up') {
-            player.pos[1] = tree2.pos[1] + 109;
-        }
-        if (player.sprite.pointedAt() == 'down') {
-            player.pos[1] = tree2.pos[1] - 55;
-        }
-        if (player.sprite.pointedAt() == 'right') {
-            player.pos[0] = tree2.pos[0] - 55;
-        }
-        if (player.sprite.pointedAt() == 'left') {
-            player.pos[0] = tree2.pos[0] + 121;
         }
     }
 }
