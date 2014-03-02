@@ -57,7 +57,8 @@ resources.load([
     'img/wizard.png',
     'img/wizard2.png',
     'img/background.png',
-	'img/IonShot.png'
+	'img/IonShot.png',
+	'img/cave_spider.png'
 	
 ]);
 resources.onReady(init);
@@ -100,6 +101,8 @@ var troll = {
     speed: 100
 };
 
+var spiders = [];
+
 var bullets = [];
 var enemies = [];
 var explosions = [];
@@ -117,8 +120,6 @@ var trollsKilled = document.getElementById('trollScore');
 // Speed in pixels per second
 var playerSpeed = 200;
 var bulletSpeed = 800;
-
-var halfexplosionsprite = 20;
 
 // Update game objects
 function update(dt) {
@@ -311,7 +312,7 @@ function bulletsHitsEnemy(enemy, onHit) {
 
             // Remove the bullet and stop this iteration
             bullets.splice(j, 1);
-            console.log("Kille enemy");
+            console.log("Kill enemy");
             return true;
         }
         return false;
