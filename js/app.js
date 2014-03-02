@@ -88,7 +88,10 @@ var troll = {
     speed: 100
 };
 
+troll.healthBar = new HealthBar(troll, [50, 0], [120, 10]);
+
 var spiders = [];
+
 
 var bullets = [];
 var enemies = [];
@@ -464,6 +467,9 @@ function renderEntity(entity) {
     ctx.save();
     ctx.translate(entity.pos[0], entity.pos[1]);
     entity.sprite.render(ctx);
+    if (entity.healthBar) {
+        entity.healthBar.render(ctx);
+    }
     ctx.restore();
 }
 
