@@ -88,8 +88,12 @@ var troll = {
     sprite: new Sprite('img/troll.png', [0, 0], [200, 160]), 
     hp: 5,
     maxHp: 5,
+    delay: 500,
     resetHp: function(){
         this.hp = this.maxHp;
+    },
+    delay: function(){
+        this.delay;
     },
     speed: 100
 };
@@ -307,7 +311,7 @@ function bulletsHitsEnemy(enemy, onHit) {
             enemy.hp--;
             onHit();
             // Add score
-            score += 100;
+            score += 1;
 
             // Add an explosion
             explosions.push({
@@ -376,10 +380,10 @@ function render() {
 
     // Render the player if the game isn't over
     if(!isGameOver) {
+        renderEntity(cave);
         renderEntity(player);
         renderEntity(tree);
         renderEntity(tree2);
-        renderEntity(cave);
         if (troll) {renderEntity(troll)};
     }
 
@@ -481,6 +485,9 @@ function bulletsHitTroll() {
     bulletsHitsEnemy(troll, function(){
 
         if (troll && troll.hp <= 0) {
+
+            troll.delay();
+
             troll.pos = [500, canvas.height - 600];
             troll.maxHp = troll.maxHp * 2;
             troll.resetHp();
@@ -488,3 +495,13 @@ function bulletsHitTroll() {
         };
     });
 }
+
+
+if (typeof troll.lastMovementIndex == "undefined" || troll.movementCount <= 0) {
+        troll.movementCount = 50;
+        troll.lastMovementIndex = index;
+    } else {
+        troll.movementCount--;
+    }
+
+    moveFunctions[troll.lastMovementIndex](troll, dt);
