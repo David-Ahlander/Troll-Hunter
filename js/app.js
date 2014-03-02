@@ -38,7 +38,7 @@ function init() {
     document.getElementById('play-again').addEventListener('click', function() {
 
         location.reload(true);
-        
+
         // reset();
     });
 
@@ -57,9 +57,8 @@ resources.load([
     'img/wizard.png',
     'img/wizard2.png',
     'img/background.png',
-	'img/IonShot.png',
-	'img/cave_spider.png'
-	
+    'img/IonShot.png',
+    'img/cave_spider.png'
 ]);
 resources.onReady(init);
 
@@ -68,7 +67,7 @@ var player = {
     pos: [0, 0],
     sprite: new Sprite('img/wizard2.png', [110, 0], [55, 55])
 };
- 
+
     // tree: new Tree([0, 0], [0, 0], [120, 108],);
 
 var tree = {
@@ -88,7 +87,7 @@ var cave = {
 
 var troll = {
     pos: [0, 0],
-    sprite: new Sprite('img/troll.png', [0, 0], [200, 160]), 
+    sprite: new Sprite('img/troll.png', [0, 0], [200, 160]),
     hp: 5,
     maxHp: 5,
     delay: 500,
@@ -128,9 +127,9 @@ function update(dt) {
     gameTime += dt;
     handleInput(dt);
     if (troll) {trollMovement(dt)};
-	
-	spiderMovement(dt);
-	
+
+    spiderMovement(dt);
+
     updateEntities(dt);
 
     // It gets harder over time by adding enemies using this
@@ -172,9 +171,9 @@ function moveEnemyRight(troll, dt) {
 
 function trollMovement(dt) {
     if (!troll) return;
-	
+
     var moveFunctions = [moveEnemyUp, moveEnemyDown, moveEnemyLeft, moveEnemyRight];
-    
+
     var index = Math.floor(Math.random() * moveFunctions.length);
 
     if (typeof troll.lastMovementIndex == "undefined" || troll.movementCount <= 0) {
@@ -188,44 +187,44 @@ function trollMovement(dt) {
 }
 
 function spiderMovement(dt){
-	if(spiders.length < numOfSpiders)
-	{
-		addSpider();
-	}
-		
-	var moveFunctions = [moveEnemyUp, moveEnemyDown, moveEnemyLeft, moveEnemyRight];    
-    var index = Math.floor(Math.random() * moveFunctions.length);
-	
-	for(var i=0;i<spiders.length;i++)
-	{
-		var spider = spiders[i];
-		
-		 if (typeof spider.lastMovementIndex == "undefined" || spider.movementCount <= 0) {
-			spider.movementCount = 20;
-			spider.lastMovementIndex = index;
-		} else {
-			spider.movementCount--;
-		}
+    if(spiders.length < numOfSpiders)
+    {
+        addSpider();
+    }
 
-		moveFunctions[spider.lastMovementIndex](spider, dt);
-	}
+    var moveFunctions = [moveEnemyUp, moveEnemyDown, moveEnemyLeft, moveEnemyRight];
+    var index = Math.floor(Math.random() * moveFunctions.length);
+
+    for(var i=0;i<spiders.length;i++)
+    {
+        var spider = spiders[i];
+
+         if (typeof spider.lastMovementIndex == "undefined" || spider.movementCount <= 0) {
+            spider.movementCount = 20;
+            spider.lastMovementIndex = index;
+        } else {
+            spider.movementCount--;
+        }
+
+        moveFunctions[spider.lastMovementIndex](spider, dt);
+    }
 }
 
 function addSpider(){
-	spiders.push({ 
-		pos: [cave.pos[0], cave.pos[1] ],
-		sprite: new Sprite('img/cave_spider.png', [0, 0], [31, 31]), 
-		hp: 1,
-		maxHp: 1,
-		delay: 500,
-		resetHp: function(){
-			this.hp = this.maxHp;
-		},
-		delay: function(){
-			this.delay;
-		},
-		speed: 300
-	});
+    spiders.push({
+        pos: [cave.pos[0], cave.pos[1] ],
+        sprite: new Sprite('img/cave_spider.png', [0, 0], [31, 31]),
+        hp: 1,
+        maxHp: 1,
+        delay: 500,
+        resetHp: function(){
+            this.hp = this.maxHp;
+        },
+        delay: function(){
+            this.delay;
+        },
+        speed: 300
+    });
 }
 
 function handleInput(dt) {
@@ -254,8 +253,8 @@ function handleInput(dt) {
        Date.now() - lastFire > 100) {
         var x = player.pos[0] + player.sprite.size[0] / 2;
         var y = player.pos[1] + player.sprite.size[1] / 2;
-		
-		bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
+
+        bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
 
         if (trollScore > 1) {
             bulletSpeed = 1500;
@@ -371,9 +370,9 @@ function checkCollisions() {
     checkPlayerBounds();
     checkHitTree();
     checkHitTroll();
-	checkHitSpiders();
-	bulletsHitTree();
-	bulletsHitSpiders();
+    checkHitSpiders();
+    bulletsHitTree();
+    bulletsHitSpiders();
     bulletsHitTroll();
 }
 
@@ -406,24 +405,24 @@ function checkPlayerBounds() {
     else if(troll && troll.pos[1] > canvas.height - troll.sprite.size[1]) {
         troll.pos[1] = canvas.height - troll.sprite.size[1];
     }
-	
-	for(var i=0;i<spiders.length;i++)
-	{
-		var spider = spiders[i];
-		if(spider && spider.pos[0] < 0) {
-			spider.pos[0] = 0;
-		}
-		else if(spider && spider.pos[0] > canvas.width - spider.sprite.size[0]) {
-			spider.pos[0] = canvas.width - spider.sprite.size[0];
-		}
 
-		if(spider && spider.pos[1] < 0) {
-			spider.pos[1] = 0;
-		}
-		else if(spider && spider.pos[1] > canvas.height - spider.sprite.size[1]) {
-			spider.pos[1] = canvas.height - spider.sprite.size[1];
-		}
-	}
+    for(var i=0;i<spiders.length;i++)
+    {
+        var spider = spiders[i];
+        if(spider && spider.pos[0] < 0) {
+            spider.pos[0] = 0;
+        }
+        else if(spider && spider.pos[0] > canvas.width - spider.sprite.size[0]) {
+            spider.pos[0] = canvas.width - spider.sprite.size[0];
+        }
+
+        if(spider && spider.pos[1] < 0) {
+            spider.pos[1] = 0;
+        }
+        else if(spider && spider.pos[1] > canvas.height - spider.sprite.size[1]) {
+            spider.pos[1] = canvas.height - spider.sprite.size[1];
+        }
+    }
 }
 
 // Draw everything
@@ -443,14 +442,14 @@ function render() {
     renderEntities(bullets);
     renderEntities(enemies);
     renderEntities(explosions);
-	
-	renderEntities(spiders);
+
+    renderEntities(spiders);
 };
 
 function renderEntities(list) {
     for(var i=0; i<list.length; i++) {
         renderEntity(list[i]);
-    }    
+    }
 }
 
 function renderEntity(entity) {
@@ -492,7 +491,7 @@ function reset() {
 
 function checkHitTree() {
     // Unable player to walk through trees
-    
+
     if(boxCollides(player.pos, player.sprite.size, tree.pos, tree.sprite.size)) {
 
         if (player.sprite.pointedAt() == 'up') {
@@ -534,13 +533,13 @@ function checkHitTroll() {
 }
 
 function checkHitSpiders(){
-	//Check if spiders catch Züper Alex
-	for(var i=0;i<spiders.length;i++){
-		var spider = spiders[i];
-		if(spider && boxCollides(player.pos, player.sprite.size, spider.pos, spider.sprite.size)) {
-			gameOver();
-		}
-	}
+    //Check if spiders catch Züper Alex
+    for(var i=0;i<spiders.length;i++){
+        var spider = spiders[i];
+        if(spider && boxCollides(player.pos, player.sprite.size, spider.pos, spider.sprite.size)) {
+            gameOver();
+        }
+    }
 }
 
 function bulletsHitTroll() {
@@ -561,86 +560,85 @@ function bulletsHitTroll() {
 }
 
 function bulletsHitTree(){
-	// Check if bullets hit trees
-	var treepos = [];
-	
-	treepos.push(tree.pos);
-	treepos.push(tree2.pos);
-	
+    // Check if bullets hit trees
+    var treepos = [];
+
+    treepos.push(tree.pos);
+    treepos.push(tree2.pos);
+
     var treespritesize = tree.sprite.size;
-	
 
     for(var j=0; j<bullets.length; j++) {
         var pos = bullets[j].pos;
         var size = bullets[j].sprite.size;
 
-		for(var i=0;i<treepos.length;i++)
+        for(var i=0;i<treepos.length;i++)
         {
-			if(boxCollides(treepos[i], treespritesize, pos, size)) {
-			   // Add an explosion
-				explosions.push({
-					pos: pos,
-					sprite: new Sprite('img/sprites.png',
-									   [0, 116],
-									   [39, 40],
-									   20,
-									   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-									   null,
-									   true)
-				});
-				// Remove the bullet and stop this iteration
-				bullets.splice(j, 1);
-				return true;
-			}		
-		}
+            if(boxCollides(treepos[i], treespritesize, pos, size)) {
+               // Add an explosion
+                explosions.push({
+                    pos: pos,
+                    sprite: new Sprite('img/sprites.png',
+                                       [0, 116],
+                                       [39, 40],
+                                       20,
+                                       [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                                       null,
+                                       true)
+                });
+                // Remove the bullet and stop this iteration
+                bullets.splice(j, 1);
+                return true;
+            }
+        }
         return false;
     }
 }
 
 function bulletsHitSpiders(){
-	// Check if bullets hit trees
-	
+    // Check if bullets hit trees
+
     var spidersize = spiders[0].sprite.size;
-	
+
 
     for(var j=0; j<bullets.length; j++) {
         console.log("New loop");
         var pos = bullets[j].pos;
         var size = bullets[j].sprite.size;
 
-		for(var i=0;i<spiders.length;i++)
+        for(var i=0;i<spiders.length;i++)
         {
-			if(boxCollides(spiders[i].pos, spidersize, pos, size)) {
-			   // Add an explosion
-				explosions.push({
-					pos: pos,
-					sprite: new Sprite('img/sprites.png',
-									   [0, 116],
-									   [39, 40],
-									   20,
-									   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-									   null,
-									   true)
-				});
-				// Remove the bullet and stop this iteration
-				bullets.splice(j, 1);
-				
-				spiders.splice(i,1);
-				
-				return true;
-				
-			}		
-		}
+            if(boxCollides(spiders[i].pos, spidersize, pos, size)) {
+               // Add an explosion
+                explosions.push({
+                    pos: pos,
+                    sprite: new Sprite('img/sprites.png',
+                                       [0, 116],
+                                       [39, 40],
+                                       20,
+                                       [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                                       null,
+                                       true)
+                });
+                // Remove the bullet and stop this iteration
+                bullets.splice(j, 1);
+
+                spiders.splice(i,1);
+
+                return true;
+
+            }
+        }
         return false;
     }
 }
 
 
 if (typeof troll.lastMovementIndex == "undefined" || troll.movementCount <= 0) {
-        troll.movementCount = 50;
-        troll.lastMovementIndex = index;
-    } else {
-        troll.movementCount--;
-    }
+    troll.movementCount = 50;
+    troll.lastMovementIndex = index;
+} else {
+    troll.movementCount--;
+}
 
-    moveFunctions[troll.lastMovementIndex](troll, dt);
+moveFunctions[troll.lastMovementIndex](troll, dt);
