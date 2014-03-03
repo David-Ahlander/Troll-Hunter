@@ -131,7 +131,7 @@ function update(dt) {
     var accuracy = 0;
     if (bulletScore && bulletFired) {
 
-        accuracy = bulletScore / bulletFired * 100;
+        accuracy = Math.round(bulletScore / bulletFired * 100);
     }
     var score = {
         bulletsFired:   bulletFired,
