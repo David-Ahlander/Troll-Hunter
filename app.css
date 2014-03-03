@@ -33,13 +33,24 @@ section {
     width: 200px;
 }
 
+#bulletsFired {
+    float: left;
+    width: 200px;
+    padding-left: 20px;
+}
+
+    #bulletFired {
+        float: right;
+        color: white;
+    }
+
 #bulletHit {
     float: left;
     width: 200px;
     padding-left: 20px;
 }
 
-    #score {
+    #bulletScore {
         float: right;
         color: white;
     }
@@ -51,6 +62,17 @@ section {
 }
 
     #trollScore {
+        float: right;
+        color: white;
+    }
+
+#spiderKills {
+    float: left;
+    width: 200px;
+    padding-left: 20px;
+}
+
+    #spiderScore {
         float: right;
         color: white;
     }
