@@ -28,25 +28,35 @@
         </div>
       </div>
       <div id="scorePanel">
-        <div id="bulletsFired">
-          Bullets Fired
-          <div id="bulletFired">0</div>
-        </div>
-        <div id="bulletHit">
-          Bullets Hit
-          <div id="bulletScore">0</div>
-        </div>
-        <div id="trollKills">
-        Trolls killed
-          <div id="trollScore">0</div>
-        </div>
-        <div id="spiderKills">
-        Spiders killed
-          <div id="spiderScore">0</div>
-        </div>
+        
       </div>
     </section>
 
+    <script type="text/template" id="scoreTemplate">
+
+        <div id="bulletsFired">
+          Bullets Fired
+          <div id="bulletFired">{{bulletsFired}}</div>
+        </div>
+        <div id="bulletHit">
+          Bullets Hit
+          <div id="bulletScore">{{bulletsHit}}</div>
+        </div>
+        <div id="bulletHitPerc">
+        Bullets hit in %
+          <div id="bulletScorePerc">{{accuracy}}</div>
+        </div>
+        <div id="trollKills">
+        Trolls killed
+          <div id="trollScore">{{trollsKilled}}</div>
+        </div>
+        <div id="spiderKills">
+        Spiders killed
+          <div id="spiderScore">{{spidersKilled}}</div>
+        </div>
+
+    </script>
+    <script type="text/javascript" src="js/vendor/mustache.js"></script>
     <script type="text/javascript" src="js/resources.js"></script>
     <script type="text/javascript" src="js/input.js"></script>
     <script type="text/javascript" src="js/sprite.js"></script>
