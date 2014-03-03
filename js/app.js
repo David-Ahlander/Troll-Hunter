@@ -103,10 +103,14 @@ var terrainPattern;
 
 var numOfSpiders = 5;
 
-var score = 0;
-var scoreEl = document.getElementById('score');
+var bulletFired = 0;
+var bulletsFired = document.getElementById('bulletFired');
+var bulletScore = 0;
+var bulletsHit = document.getElementById('bulletScore');
 var trollScore = 0;
 var trollsKilled = document.getElementById('trollScore');
+var spiderScore = 0;
+var spidersKilled = document.getElementById('spiderScore');
 
 // Speed in pixels per second
 var playerSpeed = 200;
@@ -140,8 +144,10 @@ function update(dt) {
 
     checkCollisions();
 
-    scoreEl.innerHTML = score;
+    bulletsFired.innerHTML = bulletFired;
+    bulletsHit.innerHTML = bulletScore;
     trollsKilled.innerHTML = trollScore;
+    spidersKilled.innerHTML = spiderScore;
 };
 
 function moveEnemyUp(troll, dt) {
@@ -256,12 +262,13 @@ function handleInput(dt) {
             troll.speed = 200;
         };
 
-        if (score > 10000) {
+        if (bulletScore > 10000) {
             bulletSpeed = 1500;
             enemySpeed = 150;
         };
 
         lastFire = Date.now();
+        bulletFired += 1;
     }
 }
 
@@ -337,8 +344,8 @@ function bulletsHitsEnemy(enemy, onHit) {
         if(boxCollides(enemyPos, enemySpriteSize, pos, size)) {
             enemy.hp--;
             onHit();
-            // Add score
-            score += 1;
+            // Add bulletScore
+            bulletScore += 1;
 
             // Add an explosion
             explosions.push({
@@ -475,8 +482,10 @@ function reset() {
     document.getElementById('game-over-overlay').style.display = 'none';
     isGameOver = false;
     gameTime = 0;
-    score = 0;
+    bulletFired = 0;
+    bulletScore = 0;
     trollScore = 0;
+    spiderScore = 0;
 
     enemies = [];
     bullets = [];
@@ -605,6 +614,9 @@ function bulletsHitSpiders(){
                 bullets.splice(j, 1);
 
                 spiders.splice(i,1);
+
+                spiderScore += 1;
+                bulletScore += 1;
 
                 return true;
 
