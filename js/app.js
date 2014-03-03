@@ -247,6 +247,14 @@ function handleInput(dt) {
             Troll.prototype.speed = 200;
         };
 
+        // If score divided by a hundred is greater than number of trolls ^2
+        // Adds a new troll when scores passes 200, 500, 1000, 1700, ...
+        if (Math.floor(totalScore / 100) > Math.pow(trolls.length, 2)) {
+            trolls.push(new Troll({
+                pos: [trollSpawn[0], trollSpawn[1]]
+            }));
+        }
+
         if (bulletScore > 10000) {
             bulletSpeed = 1500;
             enemySpeed = 150;
