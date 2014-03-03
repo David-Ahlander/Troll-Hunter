@@ -362,9 +362,7 @@ function bulletsHitsEnemy(enemy, onHit) {
             // Remove the bullet and stop this iteration
             bullets.splice(j, 1);
             console.log("Kill enemy");
-            return true;
         }
-        return false;
     }
 
 }
@@ -578,10 +576,8 @@ function bulletsHitTree(){
                 });
                 // Remove the bullet and stop this iteration
                 bullets.splice(j, 1);
-                return true;
             }
         }
-        return false;
     }
 }
 
@@ -618,11 +614,11 @@ function bulletsHitSpiders(){
                 spiderScore += 1;
                 bulletScore += 1;
 
-                return true;
+                
 
             }
         }
-        return false;
+
     }
 }
 
