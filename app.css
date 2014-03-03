@@ -33,57 +33,13 @@ section {
     width: 200px;
 }
 
-#bulletsFired {
+.scoreBoard {
     float: left;
     width: 200px;
     padding-left: 20px;
 }
 
-    #bulletFired {
-        float: right;
-        color: white;
-    }
-
-#bulletHit {
-    float: left;
-    width: 200px;
-    padding-left: 20px;
-}
-
-    #bulletScore {
-        float: right;
-        color: white;
-    }
-
-#bulletHitPerc {
-    float: left;
-    width: 200px;
-    padding-left: 20px;
-}
-
-    #bulletScorePerc {
-        float: right;
-        color: white;
-    }
-
-#trollKills {
-    float: left;
-    width: 200px;
-    padding-left: 20px;
-}
-
-    #trollScore {
-        float: right;
-        color: white;
-    }
-
-#spiderKills {
-    float: left;
-    width: 200px;
-    padding-left: 20px;
-}
-
-    #spiderScore {
+    .score {
         float: right;
         color: white;
     }
