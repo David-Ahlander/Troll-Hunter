@@ -150,23 +150,24 @@ function update(dt) {
 
 };
 
-function moveEnemyUp(troll, dt) {
-    troll.pos[1] -= troll.speed * dt;
+function moveEnemyUp(enemy, dt) {
+
+    enemy.pos[1] -= enemy.speed * dt;
 
 }
-function moveEnemyDown(troll, dt) {
+function moveEnemyDown(enemy, dt) {
 
-    troll.pos[1] += troll.speed * dt;
-
-}
-function moveEnemyLeft(troll, dt) {
-
-    troll.pos[0] -= troll.speed * dt;
+    enemy.pos[1] += enemy.speed * dt;
 
 }
-function moveEnemyRight(troll, dt) {
+function moveEnemyLeft(enemy, dt) {
 
-    troll.pos[0] += troll.speed * dt;
+    enemy.pos[0] -= enemy.speed * dt;
+
+}
+function moveEnemyRight(enemy, dt) {
+
+    enemy.pos[0] += enemy.speed * dt;
 }
 
 function trollMovement(dt) {
