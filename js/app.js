@@ -108,6 +108,7 @@ var bulletScore = 0;
 var bulletScorePerc = 0;
 var trollScore = 0;
 var spiderScore = 0;
+var totalScore = 0;
 
 // Speed in pixels per second
 var playerSpeed = 200;
@@ -133,12 +134,16 @@ function update(dt) {
 
         accuracy = Math.round(bulletScore / bulletFired * 100);
     }
+
+    totalScore = accuracy + (trollScore * 10) + spiderScore;
+
     var score = {
         bulletsFired:   bulletFired,
         bulletsHit:     bulletScore,
         accuracy:       accuracy,
         trollsKilled:   trollScore,
-        spidersKilled:  spiderScore
+        spidersKilled:  spiderScore,
+        totalScore:     totalScore
     };
 
     document.getElementById('scorePanel').innerHTML = Mustache.render(document.getElementById('scoreTemplate').innerHTML, score);
