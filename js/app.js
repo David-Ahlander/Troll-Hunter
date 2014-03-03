@@ -78,20 +78,9 @@ var cave = {
     sprite: new Sprite('img/cave.png', [0, 0], [210, 141])
 };
 
-var troll = {
-    pos: [0, 0],
-    sprite: new Sprite('img/troll.png', [0, 0], [200, 160]),
-    hp: 5,
-    maxHp: 5,
-    delay: 500,
-    resetHp: function(){
-        this.hp = this.maxHp;
-    },
-    delay: function(){
-        this.delay;
-    },
-    speed: 100
-};
+var trollSpawn = [500, canvas.height - 600];
+
+var troll;
 
 // Adds health bar to troll.
 new HealthBar(troll, [50, 0], [120, 10]);
@@ -487,7 +476,9 @@ function reset() {
 
     player.pos = [50, canvas.height / 2];
     cave.pos = [590, canvas.height - 600];
-    troll.pos = [500, canvas.height - 600];
+    troll = new Troll({
+        pos: [trollSpawn[0], trollSpawn[1]]
+    });
 
     for (var n = 0; n < trees.length; n++) {
         trees[n].randomizePosition();
@@ -540,11 +531,12 @@ function bulletsHitTroll() {
 
             logger.debug('Killed troll at ' + troll.pos);
 
-            troll.delay();
+            troll = new Troll({
+                pos: [trollSpawn[0], trollSpawn[1]],
+                maxHp: troll.maxHp * 2
+            });
 
-            troll.pos = [500, canvas.height - 600];
-            troll.maxHp = troll.maxHp * 2;
-            troll.resetHp();
+            troll.delay();
             trollScore += 1;
         };
     });
