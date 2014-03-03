@@ -546,20 +546,16 @@ function bulletsHitTroll() {
 
 function bulletsHitTree(){
     // Check if bullets hit trees
-    var treepos = [];
 
-    treepos.push(tree.pos);
-    treepos.push(tree2.pos);
-
-    var treespritesize = tree.sprite.size;
+    var treespritesize = trees[0].sprite.size;
 
     for(var j=0; j<bullets.length; j++) {
         var pos = bullets[j].pos;
         var size = bullets[j].sprite.size;
 
-        for(var i=0;i<treepos.length;i++)
+        for(var i=0;i<trees.length;i++)
         {
-            if(boxCollides(treepos[i], treespritesize, pos, size)) {
+            if(boxCollides(trees[i].pos, treespritesize, pos, size)) {
                // Add an explosion
                 explosions.push({
                     pos: pos,
@@ -619,11 +615,11 @@ function bulletsHitSpiders(){
 }
 
 
-if (typeof troll.lastMovementIndex == "undefined" || troll.movementCount <= 0) {
-    troll.movementCount = 50;
-    troll.lastMovementIndex = index;
-} else {
-    troll.movementCount--;
-}
+// if (typeof troll.lastMovementIndex == "undefined" || troll.movementCount <= 0) {
+//     troll.movementCount = 50;
+//     troll.lastMovementIndex = index;
+// } else {
+//     troll.movementCount--;
+// }
 
-moveFunctions[troll.lastMovementIndex](troll, dt);
+// moveFunctions[troll.lastMovementIndex](troll, dt);
