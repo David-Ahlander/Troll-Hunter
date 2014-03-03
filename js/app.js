@@ -104,13 +104,15 @@ var terrainPattern;
 var numOfSpiders = 5;
 
 var bulletFired = 0;
-var bulletsFired = document.getElementById('bulletFired');
+// var bulletsFired = document.getElementById('bulletFired');
 var bulletScore = 0;
-var bulletsHit = document.getElementById('bulletScore');
+// var bulletsHit = document.getElementById('bulletScore');
+var bulletScorePerc = 0;
+// var bulletsHitPerc = document.getElementById('bulletScorePerc');
 var trollScore = 0;
-var trollsKilled = document.getElementById('trollScore');
+// var trollsKilled = document.getElementById('trollScore');
 var spiderScore = 0;
-var spidersKilled = document.getElementById('spiderScore');
+// var spidersKilled = document.getElementById('spiderScore');
 
 // Speed in pixels per second
 var playerSpeed = 200;
@@ -131,6 +133,21 @@ function update(dt) {
 
     updateEntities(dt);
 
+    var accuracy = 0;
+    if (bulletScore && bulletFired) {
+
+        accuracy = bulletScore / bulletFired * 100;
+    }
+    var score = {
+        bulletsFired:   bulletFired,
+        bulletsHit:     bulletScore,
+        accuracy:       accuracy,
+        trollsKilled:   trollScore,
+        spidersKilled:  spiderScore
+    };
+
+    document.getElementById('scorePanel').innerHTML = Mustache.render(document.getElementById('scoreTemplate').innerHTML, score);
+
     // It gets harder over time by adding enemies using this
     // equation: 1-.993^gameTime
     // if(Math.random() < 1 - Math.pow(.999, gameTime)) {
@@ -144,10 +161,11 @@ function update(dt) {
 
     checkCollisions();
 
-    bulletsFired.innerHTML = bulletFired;
-    bulletsHit.innerHTML = bulletScore;
-    trollsKilled.innerHTML = trollScore;
-    spidersKilled.innerHTML = spiderScore;
+    // bulletsFired.innerHTML = bulletFired;
+    // bulletsHit.innerHTML = bulletScore;
+    // bulletsHitPerc.innerHTML = bulletScorePerc;
+    // trollsKilled.innerHTML = trollScore;
+    // spidersKilled.innerHTML = spiderScore;
 };
 
 function moveEnemyUp(troll, dt) {
