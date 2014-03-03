@@ -192,7 +192,7 @@ function trollMovement(dt) {
 function spiderMovement(dt){
     if(spiders.length < numOfSpiders)
     {
-        addSpider();
+        spiders.push(new Spider([cave.pos[0], cave.pos[1]]));
     }
 
     var moveFunctions = [moveEnemyUp, moveEnemyDown, moveEnemyLeft, moveEnemyRight];
@@ -211,23 +211,6 @@ function spiderMovement(dt){
 
         moveFunctions[spider.lastMovementIndex](spider, dt);
     }
-}
-
-function addSpider(){
-    spiders.push({
-        pos: [cave.pos[0], cave.pos[1] ],
-        sprite: new Sprite('img/cave_spider.png', [0, 0], [31, 31]),
-        hp: 1,
-        maxHp: 1,
-        delay: 500,
-        resetHp: function(){
-            this.hp = this.maxHp;
-        },
-        delay: function(){
-            this.delay;
-        },
-        speed: 300
-    });
 }
 
 function handleInput(dt) {
