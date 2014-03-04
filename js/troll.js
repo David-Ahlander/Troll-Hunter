@@ -3,6 +3,8 @@
         opts = opts || {};
         this.pos = opts.pos;
         this.maxHp = opts.maxHp || this.maxHp;
+        // Adds health bar to troll.
+        this.healthBar = new HealthBar(this, [50, 0], [120, 10]);
     }
 
     Troll.prototype = {

@@ -9,9 +9,6 @@
     function HealthBar(character, pos, size) {
         this.character = character;
 
-        // Create property `healthBar` on character which points to this instance.
-        this.character.healthBar = this;
-
         this.pos = pos;
         this.size = size;
     }

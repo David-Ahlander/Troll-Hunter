@@ -82,9 +82,6 @@ var trollSpawn = [500, canvas.height - 600];
 
 var trolls = [];
 
-// Adds health bar to troll.
-new HealthBar(troll, [50, 0], [120, 10]);
-
 var spiders = [];
 
 
