@@ -240,23 +240,20 @@ function handleInput(dt) {
 
         bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
 
-        if (trollScore > 1) {
-            bulletSpeed = 1500;
-            Troll.prototype.speed = 200;
+        if (trollScore >= 1) {
+            bulletSpeed = 850;
+            Troll.prototype.speed = 60;
+            Spider.prototype.speed = 60;
         };
-
+        
+        // FUTURE EVENT
         // If score divided by a hundred is greater than number of trolls ^2
         // Adds a new troll when scores passes 200, 500, 1000, 1700, ...
-        if (Math.floor(totalScore / 100) > Math.pow(trolls.length, 2)) {
-            trolls.push(new Troll({
-                pos: [trollSpawn[0], trollSpawn[1]]
-            }));
-        }
-
-        if (bulletScore > 10000) {
-            bulletSpeed = 1500;
-            enemySpeed = 150;
-        };
+        // if (Math.floor(totalScore / 100) > Math.pow(trolls.length, 2)) {
+        //     trolls.push(new Troll({
+        //         pos: [trollSpawn[0], trollSpawn[1]]
+        //     }));
+        // }
 
         lastFire = Date.now();
         bulletFired += 1;
@@ -557,12 +554,13 @@ function bulletsHitTroll(troll, index) {
 
             logger.debug('Killed troll at ' + troll.pos);
 
+            setTimeout(function () {
             trolls.push(new Troll({
                 pos: [trollSpawn[0], trollSpawn[1]],
                 maxHp: troll.maxHp * 2
             }));
+            }, 2000);
 
-            troll.delay();
             trollScore += 1;
         };
     });

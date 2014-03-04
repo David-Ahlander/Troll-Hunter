@@ -12,16 +12,12 @@
         hp:     5,
         maxHp:  5,
         delay:  500,
-        speed:  100,
+        speed:  50,
         sprite: new Sprite('img/troll.png', [0, 0], [200, 160])
     };
 
     Troll.prototype.resetHp = function () {
         this.hp = this.maxHp;
-    };
-
-    Troll.prototype.delay = function () {
-        this.delay; //FIXME
     };
 
     window.Troll = Troll;
