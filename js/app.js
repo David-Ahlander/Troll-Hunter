@@ -601,11 +601,11 @@ function bulletsHitSpiders(){
                // Add an explosion
                 explosions.push({
                     pos: pos,
-                    sprite: new Sprite('img/sprites.png',
-                                       [0, 116],
-                                       [39, 40],
-                                       20,
-                                       [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    sprite: new Sprite('img/blood.png',
+                                       [75, 45],
+                                       [180, 50],
+                                       15,
+                                       [0],
                                        null,
                                        true)
                 });
