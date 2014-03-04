@@ -99,6 +99,8 @@ var terrainPattern;
 
 var numOfSpiders = 5;
 
+var highscore = new Highscore;
+
 // Class that counts scores
 var scores;
 
@@ -452,10 +454,18 @@ function renderEntity(entity) {
 
 // Game over
 function gameOver() {
+    // Only run this method once
+    if (isGameOver) return;
 
+    isGameOver = true;
+
+    highscore.add(scores);
+    highscore.save();
+    var template = document.getElementById('highscoreTemplate').innerHTML;
+    document.getElementById('highscore')
+        .innerHTML = Mustache.render(template, highscore);
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('game-over-overlay').style.display = 'block';
-    isGameOver = true;
     document.getElementById('play-again').focus();
 
 }

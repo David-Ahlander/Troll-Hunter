@@ -16,6 +16,8 @@
     <div id="game-over" style="display: block;">
       <h1>GAME OVER</h1>
       <button id="play-again">Hit SPACE to re-play</button>
+
+      <div id="highscore"></div>
     </div>
 
     <section>
@@ -79,6 +81,16 @@
         </div>
 
     </script>
+
+    <script type="text/template" id="highscoreTemplate">
+      <h3>Highscore</h3>
+      <ol>
+        {{#list}}
+        <li>{{total}}</li>
+        {{/list}}
+      </ul>
+    </script>
+
     <script type="text/javascript" src="js/vendor/mustache.js"></script>
     <script type="text/javascript" src="js/logger.js"></script>
     <script type="text/javascript" src="js/resources.js"></script>
@@ -88,6 +100,7 @@
     <script type="text/javascript" src="js/tree.js"></script>
     <script type="text/javascript" src="js/health-bar.js"></script>
     <script type="text/javascript" src="js/troll.js"></script>
+    <script type="text/javascript" src="js/highscore.js"></script>
     <script type="text/javascript" src="js/scores.js"></script>
     <script type="text/javascript" src="js/levels.js"></script>
     <script type="text/javascript" src="js/app.js"></script>

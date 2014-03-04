@@ -1,11 +1,12 @@
 (function (){
-    function Scores(){
-        this.bulletFired = 0;
-        this.bulletHits = 0;
-        this.trollsKilled = 0;
-        this.spidersKilled = 0;
-        this.accuracy = 0;
-        this.total = 0;
+    function Scores (opts) {
+        opts = opts || {};
+        this.bulletFired   = opts.bulletFired   || 0;
+        this.bulletHits    = opts.bulletHits    || 0;
+        this.trollsKilled  = opts.trollsKilled  || 0;
+        this.spidersKilled = opts.spidersKilled || 0;
+        this.accuracy      = opts.accuracy      || 0;
+        this.total         = opts.total         || 0;
     }
 
     Scores.prototype.setAccuracy = function(){
