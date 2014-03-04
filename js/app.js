@@ -600,11 +600,11 @@ function bulletsHitSpiders(){
             if(boxCollides(spiders[i].pos, spidersize, pos, size)) {
                // Add an explosion
                 explosions.push({
-                    pos: pos,
+                    pos: spiders[i].pos,
                     sprite: new Sprite('img/blood.png',
                                        [75, 45],
                                        [180, 50],
-                                       15,
+                                       1,
                                        [0],
                                        null,
                                        true)
