@@ -1,3 +1,8 @@
+// Create a global logger
+window.logger = new Logger;
+
+   logger.enable(); // Enable it like this via console
+// logger.disable(); // Disable it like this via console
 
 // A cross-browser requestAnimationFrame
 // See https://hacks.mozilla.org/2011/08/animating-with-javascript-from-setinterval-to-requestanimationframe/
@@ -157,7 +162,6 @@ function update(dt) {
 };
 
 function moveEnemyUp(troll, dt) {
-    console.log("up");
     troll.pos[1] -= troll.speed * dt;
 
 }
@@ -324,11 +328,8 @@ function bulletsHitsEnemy(enemy, onHit) {
     var enemySpriteSize = enemy.sprite.size;
 
     for(var j=0; j<bullets.length; j++) {
-        console.log("New loop");
         var pos = bullets[j].pos;
         var size = bullets[j].sprite.size;
-
-        console.log(bullets[j]);
 
         if(boxCollides(enemyPos, enemySpriteSize, pos, size)) {
             enemy.hp--;
@@ -350,7 +351,6 @@ function bulletsHitsEnemy(enemy, onHit) {
 
             // Remove the bullet and stop this iteration
             bullets.splice(j, 1);
-            console.log("Kill enemy");
         }
     }
 
@@ -538,6 +538,8 @@ function bulletsHitTroll() {
 
         if (troll && troll.hp <= 0) {
 
+            logger.debug('Killed troll at ' + troll.pos);
+
             troll.delay();
 
             troll.pos = [500, canvas.height - 600];
@@ -585,7 +587,6 @@ function bulletsHitSpiders(){
 
 
     for(var j=0; j<bullets.length; j++) {
-        console.log("New loop");
         var pos = bullets[j].pos;
         var size = bullets[j].sprite.size;
 
@@ -607,6 +608,7 @@ function bulletsHitSpiders(){
                 bullets.splice(j, 1);
 
                 spiders.splice(i,1);
+                logger.debug('Killed spider at ' + pos);
 
                 spiderScore += 1;
                 bulletScore += 1;
