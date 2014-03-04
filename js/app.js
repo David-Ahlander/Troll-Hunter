@@ -100,7 +100,7 @@ var terrainPattern;
 var numOfSpiders = 5;
 
 // Class that counts scores
-var scores = new Scores();
+var scores;
 
 // Class that counts scores
 var level = new Levels();
@@ -125,16 +125,10 @@ function update(dt) {
 
     updateEntities(dt);
 
-    var score = {
-        bulletsFired:   scores.bulletFired,
-        bulletsHit:     scores.bulletHits,
-        accuracy:       scores.accuracy(),
-        trollsKilled:   scores.trollsKilled,
-        spidersKilled:  scores.spidersKilled,
-        totalScore:     scores.total()
-    };
+    var template = document.getElementById('scoreTemplate').innerHTML;
 
-    document.getElementById('scorePanel').innerHTML = Mustache.render(document.getElementById('scoreTemplate').innerHTML, score);
+    document.getElementById('scorePanel')
+        .innerHTML = Mustache.render(template, scores.calculate());
 
     checkCollisions();
 
@@ -473,10 +467,7 @@ function reset() {
     document.getElementById('game-over-overlay').style.display = 'none';
     isGameOver = false;
     gameTime = 0;
-    scores.bulletFired = 0;
-    scores.bulletHits = 0;
-    scores.trollsKilled = 0;
-    scores.spidersKilled = 0;
+    scores = new Scores;
     level.bulletSpeed = 200;
 
     enemies = [];
