@@ -78,23 +78,9 @@ var cave = {
     sprite: new Sprite('img/cave.png', [0, 0], [210, 141])
 };
 
-var troll = {
-    pos: [0, 0],
-    sprite: new Sprite('img/troll.png', [0, 0], [200, 160]),
-    hp: 5,
-    maxHp: 5,
-    delay: 500,
-    resetHp: function(){
-        this.hp = this.maxHp;
-    },
-    delay: function(){
-        this.delay;
-    },
-    speed: 100
-};
+var trollSpawn = [500, canvas.height - 600];
 
-// Adds health bar to troll.
-new HealthBar(troll, [50, 0], [120, 10]);
+var trolls = [];
 
 var spiders = [];
 
@@ -132,7 +118,9 @@ trees.push(new Tree([0, 0]))
 function update(dt) {
     gameTime += dt;
     handleInput(dt);
-    if (troll) {trollMovement(dt)};
+    for (var n = 0; n < trolls.length; n++) {
+        trollMovement(trolls[n], dt);
+    }
 
     spiderMovement(dt);
 
@@ -161,26 +149,27 @@ function update(dt) {
 
 };
 
-function moveEnemyUp(troll, dt) {
-    troll.pos[1] -= troll.speed * dt;
+function moveEnemyUp(enemy, dt) {
+
+    enemy.pos[1] -= enemy.speed * dt;
 
 }
-function moveEnemyDown(troll, dt) {
+function moveEnemyDown(enemy, dt) {
 
-    troll.pos[1] += troll.speed * dt;
-
-}
-function moveEnemyLeft(troll, dt) {
-
-    troll.pos[0] -= troll.speed * dt;
+    enemy.pos[1] += enemy.speed * dt;
 
 }
-function moveEnemyRight(troll, dt) {
+function moveEnemyLeft(enemy, dt) {
 
-    troll.pos[0] += troll.speed * dt;
+    enemy.pos[0] -= enemy.speed * dt;
+
+}
+function moveEnemyRight(enemy, dt) {
+
+    enemy.pos[0] += enemy.speed * dt;
 }
 
-function trollMovement(dt) {
+function trollMovement(troll, dt) {
     if (!troll) return;
 
     var moveFunctions = [moveEnemyUp, moveEnemyDown, moveEnemyLeft, moveEnemyRight];
@@ -252,8 +241,16 @@ function handleInput(dt) {
 
         if (trollScore > 1) {
             bulletSpeed = 1500;
-            troll.speed = 200;
+            Troll.prototype.speed = 200;
         };
+
+        // If score divided by a hundred is greater than number of trolls ^2
+        // Adds a new troll when scores passes 200, 500, 1000, 1700, ...
+        if (Math.floor(totalScore / 100) > Math.pow(trolls.length, 2)) {
+            trolls.push(new Troll({
+                pos: [trollSpawn[0], trollSpawn[1]]
+            }));
+        }
 
         if (bulletScore > 10000) {
             bulletSpeed = 1500;
@@ -268,7 +265,9 @@ function handleInput(dt) {
 function updateEntities(dt) {
     // Update the player sprite animation
     player.sprite.update(dt);
-    troll && troll.sprite.update(dt);
+    for (var n = 0; n < trolls.length; n++) {
+        trolls[n].sprite.update(dt);
+    }
     for (var n = 0; n < trees.length; n++) {
         trees[n].sprite.update(dt);
     }
@@ -361,11 +360,16 @@ function checkCollisions() {
     for (var n = 0; n < trees.length; n++) {
         checkHitTree(trees[n]);
     }
-    checkHitTroll();
+    for (var n = 0; n < trees.length; n++) {
+        checkHitTroll(trolls[n]);
+    }
     checkHitSpiders();
     bulletsHitTree();
     bulletsHitSpiders();
-    bulletsHitTroll();
+    // Backwards because we might splice a troll which makes indexes change
+    for (var n = trolls.length - 1; n >= 0; n--) {
+        bulletsHitTroll(trolls[n], n);
+    }
 }
 
 function checkPlayerBounds() {
@@ -384,18 +388,8 @@ function checkPlayerBounds() {
         player.pos[1] = canvas.height - player.sprite.size[1];
     }
 
-    if(troll && troll.pos[0] < 0) {
-        troll.pos[0] = 0;
-    }
-    else if(troll && troll.pos[0] > canvas.width - troll.sprite.size[0]) {
-        troll.pos[0] = canvas.width - troll.sprite.size[0];
-    }
-
-    if(troll && troll.pos[1] < 0) {
-        troll.pos[1] = 0;
-    }
-    else if(troll && troll.pos[1] > canvas.height - troll.sprite.size[1]) {
-        troll.pos[1] = canvas.height - troll.sprite.size[1];
+    for (var n = 0; n < trolls.length; n++) {
+        checkTrollBounds(trolls[n]);
     }
 
     for(var i=0;i<spiders.length;i++)
@@ -417,6 +411,22 @@ function checkPlayerBounds() {
     }
 }
 
+function checkTrollBounds(troll) {
+    if(troll && troll.pos[0] < 0) {
+        troll.pos[0] = 0;
+    }
+    else if(troll && troll.pos[0] > canvas.width - troll.sprite.size[0]) {
+        troll.pos[0] = canvas.width - troll.sprite.size[0];
+    }
+
+    if(troll && troll.pos[1] < 0) {
+        troll.pos[1] = 0;
+    }
+    else if(troll && troll.pos[1] > canvas.height - troll.sprite.size[1]) {
+        troll.pos[1] = canvas.height - troll.sprite.size[1];
+    }
+}
+
 // Draw everything
 function render() {
     ctx.fillStyle = terrainPattern;
@@ -429,7 +439,9 @@ function render() {
         for (var n = 0; n < trees.length; n++) {
             renderEntity(trees[n]);
         }
-        if (troll) {renderEntity(troll)};
+        for (var n = 0; n < trolls.length; n++) {
+            renderEntity(trolls[n]);
+        }
     }
 
     renderEntities(bullets);
@@ -487,7 +499,10 @@ function reset() {
 
     player.pos = [50, canvas.height / 2];
     cave.pos = [590, canvas.height - 600];
-    troll.pos = [500, canvas.height - 600];
+    trolls = [];
+    trolls.push(new Troll({
+        pos: [trollSpawn[0], trollSpawn[1]]
+    }));
 
     for (var n = 0; n < trees.length; n++) {
         trees[n].randomizePosition();
@@ -514,7 +529,7 @@ function checkHitTree(tree) {
     }
 }
 
-function checkHitTroll() {
+function checkHitTroll(troll) {
     // Unable player to walk through trees
     if(troll && boxCollides(player.pos, player.sprite.size, troll.pos, troll.sprite.size)) {
         gameOver();
@@ -531,20 +546,22 @@ function checkHitSpiders(){
     }
 }
 
-function bulletsHitTroll() {
+function bulletsHitTroll(troll, index) {
     // Unable player to walk through trees
 
     bulletsHitsEnemy(troll, function(){
 
         if (troll && troll.hp <= 0) {
+            trolls.splice(index, 1);
 
             logger.debug('Killed troll at ' + troll.pos);
 
-            troll.delay();
+            trolls.push(new Troll({
+                pos: [trollSpawn[0], trollSpawn[1]],
+                maxHp: troll.maxHp * 2
+            }));
 
-            troll.pos = [500, canvas.height - 600];
-            troll.maxHp = troll.maxHp * 2;
-            troll.resetHp();
+            troll.delay();
             trollScore += 1;
         };
     });
