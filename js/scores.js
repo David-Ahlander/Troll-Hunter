@@ -7,10 +7,6 @@
        
     }
 
-    Scores.prototype.reset = function(){
-
-    }
-
     Scores.prototype.accuracy = function(){
 
         var accuracy = 0;

@@ -102,9 +102,11 @@ var numOfSpiders = 5;
 // Class that counts scores
 var scores = new Scores();
 
+// Class that counts scores
+var level = new Levels();
+
 // Speed in pixels per second
 var playerSpeed = 200;
-var bulletSpeed = 800;
 
 // Add some trees
 trees.push(new Tree([0, 0]))
@@ -227,15 +229,8 @@ function handleInput(dt) {
         var y = player.pos[1] + player.sprite.size[1] / 2;
 
         bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
-
-
-        if (scores.trollsKilled >= 1) {
-            bulletSpeed = 850;
-            Troll.prototype.speed = 60;
-            Spider.prototype.speed = 60;
-        };
         
-        // FUTURE EVENT
+        // TODO (FUTURE EVENT)
         // If score divided by a hundred is greater than number of trolls ^2
         // Adds a new troll when scores passes 200, 500, 1000, 1700, ...
         // if (Math.floor(totalScore / 100) > Math.pow(trolls.length, 2)) {
@@ -260,17 +255,19 @@ function updateEntities(dt) {
     }
     cave.sprite.update(dt);
 
+    level.increaseLevel();
+
     // Update all the bullets
     for(var i=0; i<bullets.length; i++) {
         var bullet = bullets[i];
 
         switch(bullet.dir) {
-        case 'up': bullet.pos[1] -= bulletSpeed * dt; break;
-        case 'down': bullet.pos[1] += bulletSpeed * dt; break;
-        case 'right': bullet.pos[0] += bulletSpeed * dt; break;
-        case 'left': bullet.pos[0] -= bulletSpeed * dt; break;
+        case 'up': bullet.pos[1] -= level.bulletSpeed * dt; break;
+        case 'down': bullet.pos[1] += level.bulletSpeed * dt; break;
+        case 'right': bullet.pos[0] += level.bulletSpeed * dt; break;
+        case 'left': bullet.pos[0] -= level.bulletSpeed * dt; break;
         default:
-            bullet.pos[0] += bulletSpeed * dt;
+            bullet.pos[0] += level.bulletSpeed * dt;
         }
 
         // Remove the bullet if it goes offscreen
@@ -480,6 +477,7 @@ function reset() {
     scores.bulletHits = 0;
     scores.trollsKilled = 0;
     scores.spidersKilled = 0;
+    level.bulletSpeed = 200;
 
     enemies = [];
     bullets = [];
@@ -551,6 +549,8 @@ function bulletsHitTroll(troll, index) {
             }, 2000);
 
             scores.trollsKilled += 1;
+
+            //Increase level here
         };
     });
 }
@@ -625,13 +625,3 @@ function bulletsHitSpiders(){
 
     }
 }
-
-
-// if (typeof troll.lastMovementIndex == "undefined" || troll.movementCount <= 0) {
-//     troll.movementCount = 50;
-//     troll.lastMovementIndex = index;
-// } else {
-//     troll.movementCount--;
-// }
-
-// moveFunctions[troll.lastMovementIndex](troll, dt);

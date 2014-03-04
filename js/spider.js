@@ -15,10 +15,6 @@
         this.hp = this.maxHp;
     };
 
-    Spider.prototype.delay = function () {
-        this.delay;
-    };
-
     window.Spider = Spider;
 })();
 
