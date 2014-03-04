@@ -88,7 +88,11 @@ var troll = {
     speed: 100
 };
 
+// Adds health bar to troll.
+new HealthBar(troll, [50, 0], [120, 10]);
+
 var spiders = [];
+
 
 var bullets = [];
 var enemies = [];
@@ -462,8 +466,16 @@ function renderEntities(list) {
 
 function renderEntity(entity) {
     ctx.save();
+    // Reset position pointers for new objects. Position 0, 0 will become top
+    // left corner for new items such as sprites and health bars.
     ctx.translate(entity.pos[0], entity.pos[1]);
+
     entity.sprite.render(ctx);
+
+    // Render health bar if `entity` got one.
+    if (entity.healthBar) {
+        entity.healthBar.render(ctx);
+    }
     ctx.restore();
 }
 
