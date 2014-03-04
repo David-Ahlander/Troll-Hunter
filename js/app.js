@@ -64,13 +64,15 @@ resources.load([
     'img/wizard2.png',
     'img/background.png',
     'img/IonShot.png',
-    'img/cave_spider.png'
+    'img/cave_spider.png',
+	'img/bomb.png'
 ]);
 resources.onReady(init);
 
 // Game state
 var player = {
     pos: [0, 0],
+    bomb: null,
     sprite: new Sprite('img/wizard2.png', [110, 0], [55, 55])
 };
 
@@ -85,6 +87,7 @@ var trolls = [];
 
 var spiders = [];
 
+var bombs = [];
 
 var bullets = [];
 var enemies = [];
@@ -227,8 +230,15 @@ function handleInput(dt) {
        Date.now() - lastFire > 100) {
         var x = player.pos[0] + player.sprite.size[0] / 2;
         var y = player.pos[1] + player.sprite.size[1] / 2;
-
-        bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
+        
+		if(player.bomb)
+		{
+			bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/bomb.png', [0, 0], [31, 31]) });
+			player.bomb=null;
+		}
+        else{
+		    bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
+		}
         
         // TODO (FUTURE EVENT)
         // If score divided by a hundred is greater than number of trolls ^2
@@ -348,6 +358,8 @@ function checkCollisions() {
         checkHitTroll(trolls[n]);
     }
     checkHitSpiders();
+    checkPickUpBomb();
+	
     bulletsHitTree();
     bulletsHitSpiders();
     // Backwards because we might splice a troll which makes indexes change
@@ -431,7 +443,7 @@ function render() {
     renderEntities(bullets);
     renderEntities(enemies);
     renderEntities(explosions);
-
+    renderEntities(bombs);
     renderEntities(spiders);
 };
 
@@ -453,6 +465,12 @@ function renderEntity(entity) {
     if (entity.healthBar) {
         entity.healthBar.render(ctx);
     }
+	
+	//logger.debug(entity.bomb);
+	if(entity.bomb){
+		entity.bomb.sprite.render(ctx);
+	}
+	
     ctx.restore();
 }
 
@@ -477,7 +495,7 @@ function reset() {
     scores.bulletHits = 0;
     scores.trollsKilled = 0;
     scores.spidersKilled = 0;
-    level.bulletSpeed = 200;
+    level.bulletSpeed = 400;
 
     enemies = [];
     bullets = [];
@@ -527,6 +545,17 @@ function checkHitSpiders(){
         var spider = spiders[i];
         if(spider && boxCollides(player.pos, player.sprite.size, spider.pos, spider.sprite.size)) {
             gameOver();
+        }
+    }
+}
+
+function checkPickUpBomb(){
+    for(var i=0;i<bombs.length;i++){
+        var bomb = bombs[i];
+        if(bomb && boxCollides(player.pos, player.sprite.size, bomb.pos, bomb.sprite.size)) {
+            player.bomb = bomb;
+			bomb.pos = player.pos;
+			bombs.splice(i,1);
         }
     }
 }
@@ -611,6 +640,14 @@ function bulletsHitSpiders(){
                 });
                 // Remove the bullet and stop this iteration
                 bullets.splice(j, 1);
+				
+		if(Math.floor((Math.random()*10)+1)==1)
+		{
+			bombs.push({
+				pos:spiders[i].pos,
+				sprite: new Sprite('img/bomb.png', [0, 0], [31, 31])
+			});
+		}
 
                 spiders.splice(i,1);
                 logger.debug('Killed spider at ' + pos);
