@@ -18,11 +18,12 @@ var requestAnimFrame = (function(){
 })();
 
 // Create the canvas
+var gameElement = document.getElementById('game-box');
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 600;
-document.body.appendChild(canvas);
+gameElement.appendChild(canvas);
 
 // The main game loop
 var lastTime;
