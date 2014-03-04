@@ -99,12 +99,8 @@ var terrainPattern;
 
 var numOfSpiders = 5;
 
-var bulletFired = 0;
-var bulletScore = 0;
-var bulletScorePerc = 0;
-var trollScore = 0;
-var spiderScore = 0;
-var totalScore = 0;
+// Class that counts scores
+var scores = new Scores();
 
 // Speed in pixels per second
 var playerSpeed = 200;
@@ -127,21 +123,13 @@ function update(dt) {
 
     updateEntities(dt);
 
-    var accuracy = 0;
-    if (bulletScore && bulletFired) {
-
-        accuracy = Math.round(bulletScore / bulletFired * 100);
-    }
-
-    totalScore = accuracy + (trollScore * 10) + spiderScore;
-
     var score = {
-        bulletsFired:   bulletFired,
-        bulletsHit:     bulletScore,
-        accuracy:       accuracy,
-        trollsKilled:   trollScore,
-        spidersKilled:  spiderScore,
-        totalScore:     totalScore
+        bulletsFired:   scores.bulletFired,
+        bulletsHit:     scores.bulletHits,
+        accuracy:       scores.accuracy(),
+        trollsKilled:   scores.trollsKilled,
+        spidersKilled:  scores.spidersKilled,
+        totalScore:     scores.total()
     };
 
     document.getElementById('scorePanel').innerHTML = Mustache.render(document.getElementById('scoreTemplate').innerHTML, score);
@@ -240,7 +228,8 @@ function handleInput(dt) {
 
         bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
 
-        if (trollScore >= 1) {
+
+        if (scores.trollsKilled >= 1) {
             bulletSpeed = 850;
             Troll.prototype.speed = 60;
             Spider.prototype.speed = 60;
@@ -256,7 +245,7 @@ function handleInput(dt) {
         // }
 
         lastFire = Date.now();
-        bulletFired += 1;
+        scores.bulletFired += 1;
     }
 }
 
@@ -331,8 +320,8 @@ function bulletsHitsEnemy(enemy, onHit) {
         if(boxCollides(enemyPos, enemySpriteSize, pos, size)) {
             enemy.hp--;
             onHit();
-            // Add bulletScore
-            bulletScore += 1;
+            // Add scores.bulletHits
+            scores.bulletHits += 1;
 
             // Add an explosion
             explosions.push({
@@ -487,10 +476,10 @@ function reset() {
     document.getElementById('game-over-overlay').style.display = 'none';
     isGameOver = false;
     gameTime = 0;
-    bulletFired = 0;
-    bulletScore = 0;
-    trollScore = 0;
-    spiderScore = 0;
+    scores.bulletFired = 0;
+    scores.bulletHits = 0;
+    scores.trollsKilled = 0;
+    scores.spidersKilled = 0;
 
     enemies = [];
     bullets = [];
@@ -561,7 +550,7 @@ function bulletsHitTroll(troll, index) {
             }));
             }, 2000);
 
-            trollScore += 1;
+            scores.trollsKilled += 1;
         };
     });
 }
@@ -626,8 +615,8 @@ function bulletsHitSpiders(){
                 spiders.splice(i,1);
                 logger.debug('Killed spider at ' + pos);
 
-                spiderScore += 1;
-                bulletScore += 1;
+                scores.spidersKilled += 1;
+                scores.bulletHits += 1;
 
                 
 
