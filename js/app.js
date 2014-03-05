@@ -459,9 +459,12 @@ function gameOver() {
 
     highscore.add(scores);
     highscore.save();
+    var mustacheData = {
+        list: highscore.list.slice(0, 5)
+    };
     var template = document.getElementById('highscoreTemplate').innerHTML;
     document.getElementById('highscore')
-        .innerHTML = Mustache.render(template, highscore);
+        .innerHTML = Mustache.render(template, mustacheData);
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('game-over-overlay').style.display = 'block';
     document.getElementById('play-again').focus();

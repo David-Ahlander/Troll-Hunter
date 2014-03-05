@@ -7,14 +7,16 @@
     }
 
     Highscore.prototype.load = function () {
+        
         var list = JSON.parse(localStorage.getItem(this.storage)) || [];
         for (var n = 0; n < list.length; n++) {
-            // {bulletFired: 10, trollKilled: 1}
             list[n] = new Scores(list[n]);
         }
+
         console.log(list);
         this.list = list;
         return this;
+
     };
 
     Highscore.prototype.save = function () {
