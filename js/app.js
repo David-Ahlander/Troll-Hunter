@@ -128,6 +128,10 @@ function update(dt) {
     document.getElementById('scorePanel')
         .innerHTML = Mustache.render(template, scores.calculate());
 
+    var template = document.getElementById('highscoreTemplate').innerHTML;
+    document.getElementById('highscore')
+        .innerHTML = Mustache.render(template, highscore.mustacheData(scores));
+
     checkCollisions();
 
 };
@@ -196,23 +200,19 @@ function spiderMovement(dt){
 
 function handleInput(dt) {
     if(input.isDown('DOWN') || input.isDown('s')) {
-        player.pos[1] += player.moveSpeed * dt;
-        player.sprite.pointDown();
+        player.moveDown(dt);
     }
 
     else if(input.isDown('UP') || input.isDown('w')) {
-        player.pos[1] -= player.moveSpeed * dt;
-        player.sprite.pointUp();
+        player.moveUp(dt);
     }
 
     else if(input.isDown('LEFT') || input.isDown('a')) {
-        player.pos[0] -= player.moveSpeed * dt;
-        player.sprite.pointLeft();
+        player.moveLeft(dt);
     }
 
     else if(input.isDown('RIGHT') || input.isDown('d')) {
-        player.pos[0] += player.moveSpeed * dt;
-        player.sprite.pointRight();
+        player.moveRight(dt);
     }
 
     if(input.isDown('SPACE') &&
@@ -223,11 +223,11 @@ function handleInput(dt) {
         
 		if(player.bomb)
 		{
-			bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/bomb.png', [0, 0], [31, 31]) });
+			bullets.push({pos: [x, y], dir:player.pointedAt(), sprite: new Sprite('img/bomb.png', [0, 0], [31, 31]) });
 			player.bomb=null;
 		}
         else{
-		    bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
+		    bullets.push({pos: [x, y], dir:player.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
 		}
         
         // TODO (FUTURE EVENT)
@@ -473,12 +473,13 @@ function gameOver() {
 
     highscore.add(scores);
     highscore.save();
-    var mustacheData = {
-        list: highscore.list.slice(0, 5)
-    };
-    var template = document.getElementById('highscoreTemplate').innerHTML;
-    document.getElementById('highscore')
-        .innerHTML = Mustache.render(template, mustacheData);
+    // var mustacheData = {
+    //     list: highscore.list.slice(0, 5)
+    // };
+    // var template = document.getElementById('highscoreTemplate').innerHTML;
+    // document.getElementById('highscore')
+    //     .innerHTML = Mustache.render(template, mustacheData);
+
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('game-over-overlay').style.display = 'block';
     document.getElementById('play-again').focus();
@@ -515,16 +516,16 @@ function checkHitTree(tree) {
 
     if(boxCollides(player.pos, player.sprite.size, tree.pos, tree.sprite.size)) {
 
-        if (player.sprite.pointedAt() == 'up') {
+        if (player.pointedAt() == 'up') {
             player.pos[1] = tree.pos[1] + 109;
         }
-        if (player.sprite.pointedAt() == 'down') {
+        if (player.pointedAt() == 'down') {
             player.pos[1] = tree.pos[1] - 55;
         }
-        if (player.sprite.pointedAt() == 'right') {
+        if (player.pointedAt() == 'right') {
             player.pos[0] = tree.pos[0] - 55;
         }
-        if (player.sprite.pointedAt() == 'left') {
+        if (player.pointedAt() == 'left') {
             player.pos[0] = tree.pos[0] + 121;
         }
     }
