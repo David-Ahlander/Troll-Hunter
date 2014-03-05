@@ -215,7 +215,7 @@ function handleInput(dt) {
         var x = player.pos[0] + player.sprite.size[0] / 2;
         var y = player.pos[1] + player.sprite.size[1] / 2;
 
-        bullets.push({pos: [x, y], dir:player.sprite.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
+        bullets.push({pos: [x, y], dir:player.pointedAt(), sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21]) });
         
         // TODO (FUTURE EVENT)
         // If score divided by a hundred is greater than number of trolls ^2
@@ -490,16 +490,16 @@ function checkHitTree(tree) {
 
     if(boxCollides(player.pos, player.sprite.size, tree.pos, tree.sprite.size)) {
 
-        if (player.sprite.pointedAt() == 'up') {
+        if (player.pointedAt() == 'up') {
             player.pos[1] = tree.pos[1] + 109;
         }
-        if (player.sprite.pointedAt() == 'down') {
+        if (player.pointedAt() == 'down') {
             player.pos[1] = tree.pos[1] - 55;
         }
-        if (player.sprite.pointedAt() == 'right') {
+        if (player.pointedAt() == 'right') {
             player.pos[0] = tree.pos[0] - 55;
         }
-        if (player.sprite.pointedAt() == 'left') {
+        if (player.pointedAt() == 'left') {
             player.pos[0] = tree.pos[0] + 121;
         }
     }
