@@ -194,23 +194,19 @@ function spiderMovement(dt){
 
 function handleInput(dt) {
     if(input.isDown('DOWN') || input.isDown('s')) {
-        player.pos[1] += player.moveSpeed * dt;
-        player.sprite.pointDown();
+        player.moveDown(dt);
     }
 
     else if(input.isDown('UP') || input.isDown('w')) {
-        player.pos[1] -= player.moveSpeed * dt;
-        player.sprite.pointUp();
+        player.moveUp(dt);
     }
 
     else if(input.isDown('LEFT') || input.isDown('a')) {
-        player.pos[0] -= player.moveSpeed * dt;
-        player.sprite.pointLeft();
+        player.moveLeft(dt);
     }
 
     else if(input.isDown('RIGHT') || input.isDown('d')) {
-        player.pos[0] += player.moveSpeed * dt;
-        player.sprite.pointRight();
+        player.moveRight(dt);
     }
 
     if(input.isDown('SPACE') &&

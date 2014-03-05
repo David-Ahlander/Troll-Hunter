@@ -50,18 +50,6 @@
                           0, 0,
                           this.size[0], this.size[1]);
         },
-        pointDown: function() {
-            this.pos[0] = 55;
-        },
-        pointUp: function() {
-            this.pos[0] = 0;
-        },
-        pointLeft: function() {
-            this.pos[0] = 165;
-        },
-        pointRight: function() {
-            this.pos[0] = 110;
-        },
         pointedAt: function() {
             switch(this.pos[0]) {
                 case 55:
