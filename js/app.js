@@ -51,7 +51,6 @@ function init() {
     reset();
     lastTime = Date.now();
     main();
-
 }
 
 resources.load([
@@ -65,7 +64,7 @@ resources.load([
     'img/background.png',
     'img/IonShot.png',
     'img/cave_spider.png',
-	'img/bomb.png'
+    'img/bomb.png'
 ]);
 resources.onReady(init);
 
@@ -154,7 +153,7 @@ function moveEnemyLeft(enemy, dt) {
 function moveEnemyRight(enemy, dt) {
 
     enemy.pos[0] += enemy.speed * dt;
-    
+
 }
 
 function trollMovement(troll, dt) {
@@ -336,7 +335,6 @@ function bulletsHitsEnemy(enemy, onHit) {
             bullets.splice(j, 1);
         }
     }
-
 }
 
 function checkCollisions() {
@@ -349,7 +347,7 @@ function checkCollisions() {
     }
     checkHitSpiders();
     checkPickUpBomb();
-	
+
     bulletsHitTree();
     bulletsHitSpiders();
     // Backwards because we might splice a troll which makes indexes change
@@ -455,12 +453,12 @@ function renderEntity(entity) {
     if (entity.healthBar) {
         entity.healthBar.render(ctx);
     }
-	
-	//logger.debug(entity.bomb);
-	if(entity.bomb){
-		entity.bomb.sprite.render(ctx);
-	}
-	
+
+    //logger.debug(entity.bomb);
+    if(entity.bomb){
+        entity.bomb.sprite.render(ctx);
+    }
+
     ctx.restore();
 }
 
@@ -553,8 +551,8 @@ function checkPickUpBomb(){
         var bomb = bombs[i];
         if(bomb && boxCollides(player.pos, player.sprite.size, bomb.pos, bomb.sprite.size)) {
             player.bomb = bomb;
-			bomb.pos = player.pos;
-			bombs.splice(i,1);
+            bomb.pos = player.pos;
+            bombs.splice(i,1);
         }
     }
 }
@@ -618,7 +616,6 @@ function bulletsHitSpiders(){
 
     var spidersize = spiders[0].sprite.size;
 
-
     for(var j=0; j<bullets.length; j++) {
         var pos = bullets[j].pos;
         var size = bullets[j].sprite.size;
@@ -639,25 +636,21 @@ function bulletsHitSpiders(){
                 });
                 // Remove the bullet and stop this iteration
                 bullets.splice(j, 1);
-				
-		if(Math.floor((Math.random()*10)+1)==1)
-		{
-			bombs.push({
-				pos:spiders[i].pos,
-				sprite: new Sprite('img/bomb.png', [0, 0], [31, 31])
-			});
-		}
+
+                if(Math.floor((Math.random()*10)+1)==1)
+                {
+                    bombs.push({
+                        pos:spiders[i].pos,
+                        sprite: new Sprite('img/bomb.png', [0, 0], [31, 31])
+                    });
+                }
 
                 spiders.splice(i,1);
                 logger.debug('Killed spider at ' + pos);
 
                 scores.spidersKilled += 1;
                 scores.bulletHits += 1;
-
-                
-
             }
         }
-
     }
 }
