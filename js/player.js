@@ -4,7 +4,9 @@
     }   
 
     Player.prototype = {
-        sprite: new Sprite('img/wizard2.png', [110, 0], [55, 55])
+        sprite: new Sprite('img/wizard2.png', [110, 0], [55, 55]),  
+        moveSpeed: 300,
+        attackSpeed: 300
     };
 
     window.Player = Player;

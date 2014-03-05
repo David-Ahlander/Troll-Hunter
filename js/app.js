@@ -104,9 +104,6 @@ var scores;
 // Class that counts scores
 var level = new Levels();
 
-// Speed in pixels per second
-var playerSpeed = 200;
-
 // Add some trees
 trees.push(new Tree([0, 0]))
 trees.push(new Tree([0, 0]))
@@ -197,22 +194,22 @@ function spiderMovement(dt){
 
 function handleInput(dt) {
     if(input.isDown('DOWN') || input.isDown('s')) {
-        player.pos[1] += playerSpeed * dt;
+        player.pos[1] += player.moveSpeed * dt;
         player.sprite.pointDown();
     }
 
     else if(input.isDown('UP') || input.isDown('w')) {
-        player.pos[1] -= playerSpeed * dt;
+        player.pos[1] -= player.moveSpeed * dt;
         player.sprite.pointUp();
     }
 
     else if(input.isDown('LEFT') || input.isDown('a')) {
-        player.pos[0] -= playerSpeed * dt;
+        player.pos[0] -= player.moveSpeed * dt;
         player.sprite.pointLeft();
     }
 
     else if(input.isDown('RIGHT') || input.isDown('d')) {
-        player.pos[0] += playerSpeed * dt;
+        player.pos[0] += player.moveSpeed * dt;
         player.sprite.pointRight();
     }
 
@@ -256,12 +253,12 @@ function updateEntities(dt) {
         var bullet = bullets[i];
 
         switch(bullet.dir) {
-        case 'up': bullet.pos[1] -= level.bulletSpeed * dt; break;
-        case 'down': bullet.pos[1] += level.bulletSpeed * dt; break;
-        case 'right': bullet.pos[0] += level.bulletSpeed * dt; break;
-        case 'left': bullet.pos[0] -= level.bulletSpeed * dt; break;
+        case 'up': bullet.pos[1] -= player.attackSpeed * dt; break;
+        case 'down': bullet.pos[1] += player.attackSpeed * dt; break;
+        case 'right': bullet.pos[0] += player.attackSpeed * dt; break;
+        case 'left': bullet.pos[0] -= player.attackSpeed * dt; break;
         default:
-            bullet.pos[0] += level.bulletSpeed * dt;
+            bullet.pos[0] += player.attackSpeed * dt;
         }
 
         // Remove the bullet if it goes offscreen
@@ -476,7 +473,6 @@ function reset() {
     isGameOver = false;
     gameTime = 0;
     scores = new Scores;
-    level.bulletSpeed = 200;
 
     enemies = [];
     bullets = [];
