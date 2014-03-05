@@ -172,10 +172,18 @@ function trollMovement(troll, dt) {
     moveFunctions[troll.lastMovementIndex](troll, dt);
 }
 
+function randomFromArray(array) {
+    var index = Math.floor(Math.random() * array.length);
+    return array[index];
+}
+
 function spiderMovement(dt){
     if(spiders.length < numOfSpiders)
     {
-        spiders.push(new Spider([cave.pos[0], cave.pos[1]]));
+        var spawnTree = randomFromArray(trees);
+        var posX = spawnTree.pos[0] + (spawnTree.sprite.size[0] / 2);
+        var posY = spawnTree.pos[1] + (spawnTree.sprite.size[1] / 4);
+        spiders.push(new Spider([posX, posY]));
     }
 
     var moveFunctions = [moveEnemyUp, moveEnemyDown, moveEnemyLeft, moveEnemyRight];
