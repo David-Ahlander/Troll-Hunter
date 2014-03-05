@@ -27,7 +27,7 @@
     };
 
     Player.prototype.moveRight = function(dt){
-        this.pos[0] += player.moveSpeed * dt;
+        this.pos[0] += this.moveSpeed * dt;
         this.sprite.pos[0] = 110;
     };
 
