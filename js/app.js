@@ -69,10 +69,7 @@ resources.load([
 resources.onReady(init);
 
 // Game state
-var player = {
-    pos: [0, 0],
-    sprite: new Sprite('img/wizard2.png', [110, 0], [55, 55])
-};
+player = new Player([0, 0]);
 
 var cave = {
     pos: [0, 0],
