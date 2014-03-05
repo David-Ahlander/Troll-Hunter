@@ -95,3 +95,8 @@ section h1 {
 #game-over button:hover {
     border: 4px solid #000;
 }
+#highscore ol {
+  display: inline-block;
+  margin: 0 auto;
+  text-align: right;
+}
