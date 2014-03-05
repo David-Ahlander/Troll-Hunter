@@ -70,11 +70,7 @@ resources.load([
 resources.onReady(init);
 
 // Game state
-var player = {
-    pos: [0, 0],
-    bomb: null,
-    sprite: new Sprite('img/wizard2.png', [110, 0], [55, 55])
-};
+player = new Player([0, 0]);
 
 var cave = {
     pos: [0, 0],
@@ -102,14 +98,13 @@ var terrainPattern;
 
 var numOfSpiders = 5;
 
+var highscore = new Highscore;
+
 // Class that counts scores
-var scores = new Scores();
+var scores;
 
 // Class that counts scores
 var level = new Levels();
-
-// Speed in pixels per second
-var playerSpeed = 200;
 
 // Add some trees
 trees.push(new Tree([0, 0]))
@@ -128,16 +123,10 @@ function update(dt) {
 
     updateEntities(dt);
 
-    var score = {
-        bulletsFired:   scores.bulletFired,
-        bulletsHit:     scores.bulletHits,
-        accuracy:       scores.accuracy(),
-        trollsKilled:   scores.trollsKilled,
-        spidersKilled:  scores.spidersKilled,
-        totalScore:     scores.total()
-    };
+    var template = document.getElementById('scoreTemplate').innerHTML;
 
-    document.getElementById('scorePanel').innerHTML = Mustache.render(document.getElementById('scoreTemplate').innerHTML, score);
+    document.getElementById('scorePanel')
+        .innerHTML = Mustache.render(template, scores.calculate());
 
     checkCollisions();
 
@@ -161,6 +150,7 @@ function moveEnemyLeft(enemy, dt) {
 function moveEnemyRight(enemy, dt) {
 
     enemy.pos[0] += enemy.speed * dt;
+    
 }
 
 function trollMovement(troll, dt) {
@@ -171,7 +161,7 @@ function trollMovement(troll, dt) {
     var index = Math.floor(Math.random() * moveFunctions.length);
 
     if (typeof troll.lastMovementIndex == "undefined" || troll.movementCount <= 0) {
-        troll.movementCount = 50;
+        troll.movementCount = 100;
         troll.lastMovementIndex = index;
     } else {
         troll.movementCount--;
@@ -206,22 +196,22 @@ function spiderMovement(dt){
 
 function handleInput(dt) {
     if(input.isDown('DOWN') || input.isDown('s')) {
-        player.pos[1] += playerSpeed * dt;
+        player.pos[1] += player.moveSpeed * dt;
         player.sprite.pointDown();
     }
 
     else if(input.isDown('UP') || input.isDown('w')) {
-        player.pos[1] -= playerSpeed * dt;
+        player.pos[1] -= player.moveSpeed * dt;
         player.sprite.pointUp();
     }
 
     else if(input.isDown('LEFT') || input.isDown('a')) {
-        player.pos[0] -= playerSpeed * dt;
+        player.pos[0] -= player.moveSpeed * dt;
         player.sprite.pointLeft();
     }
 
     else if(input.isDown('RIGHT') || input.isDown('d')) {
-        player.pos[0] += playerSpeed * dt;
+        player.pos[0] += player.moveSpeed * dt;
         player.sprite.pointRight();
     }
 
@@ -272,12 +262,12 @@ function updateEntities(dt) {
         var bullet = bullets[i];
 
         switch(bullet.dir) {
-        case 'up': bullet.pos[1] -= level.bulletSpeed * dt; break;
-        case 'down': bullet.pos[1] += level.bulletSpeed * dt; break;
-        case 'right': bullet.pos[0] += level.bulletSpeed * dt; break;
-        case 'left': bullet.pos[0] -= level.bulletSpeed * dt; break;
+        case 'up': bullet.pos[1] -= player.attackSpeed * dt; break;
+        case 'down': bullet.pos[1] += player.attackSpeed * dt; break;
+        case 'right': bullet.pos[0] += player.attackSpeed * dt; break;
+        case 'left': bullet.pos[0] -= player.attackSpeed * dt; break;
         default:
-            bullet.pos[0] += level.bulletSpeed * dt;
+            bullet.pos[0] += player.attackSpeed * dt;
         }
 
         // Remove the bullet if it goes offscreen
@@ -476,10 +466,21 @@ function renderEntity(entity) {
 
 // Game over
 function gameOver() {
+    // Only run this method once
+    if (isGameOver) return;
 
+    isGameOver = true;
+
+    highscore.add(scores);
+    highscore.save();
+    var mustacheData = {
+        list: highscore.list.slice(0, 5)
+    };
+    var template = document.getElementById('highscoreTemplate').innerHTML;
+    document.getElementById('highscore')
+        .innerHTML = Mustache.render(template, mustacheData);
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('game-over-overlay').style.display = 'block';
-    isGameOver = true;
     document.getElementById('play-again').focus();
 
 }
@@ -491,11 +492,8 @@ function reset() {
     document.getElementById('game-over-overlay').style.display = 'none';
     isGameOver = false;
     gameTime = 0;
-    scores.bulletFired = 0;
-    scores.bulletHits = 0;
-    scores.trollsKilled = 0;
-    scores.spidersKilled = 0;
-    level.bulletSpeed = 400;
+
+    scores = new Scores;
 
     enemies = [];
     bullets = [];
@@ -629,12 +627,12 @@ function bulletsHitSpiders(){
             if(boxCollides(spiders[i].pos, spidersize, pos, size)) {
                // Add an explosion
                 explosions.push({
-                    pos: pos,
-                    sprite: new Sprite('img/sprites.png',
-                                       [0, 116],
-                                       [39, 40],
-                                       20,
-                                       [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    pos: spiders[i].pos,
+                    sprite: new Sprite('img/blood.png',
+                                       [75, 45],
+                                       [180, 50],
+                                       1,
+                                       [0],
                                        null,
                                        true)
                 });
