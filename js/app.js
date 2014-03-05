@@ -602,12 +602,12 @@ function bulletsHitSpiders(){
             if(boxCollides(spiders[i].pos, spidersize, pos, size)) {
                // Add an explosion
                 explosions.push({
-                    pos: pos,
-                    sprite: new Sprite('img/sprites.png',
-                                       [0, 116],
-                                       [39, 40],
-                                       20,
-                                       [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    pos: spiders[i].pos,
+                    sprite: new Sprite('img/blood.png',
+                                       [75, 45],
+                                       [180, 50],
+                                       1,
+                                       [0],
                                        null,
                                        true)
                 });
