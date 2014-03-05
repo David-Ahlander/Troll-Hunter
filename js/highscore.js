@@ -40,5 +40,22 @@
         return this;
     };
 
+    Highscore.prototype.mustacheData = function (currentScores) {
+
+        var mustacheData = {
+            list: this.list.slice(0, 5)
+        };
+
+        currentScores.htmlClass = "current";
+
+        mustacheData.list.push(currentScores);
+        mustacheData.list.sort(function(a, b) {
+            return a.total < b.total;
+        });
+
+        return mustacheData;
+
+    };
+
     window.Highscore = Highscore;
 })();

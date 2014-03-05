@@ -16,8 +16,6 @@
     <div id="game-over" style="display: block;">
       <h1>GAME OVER</h1>
       <button id="play-again">Hit SPACE to re-play</button>
-
-      <div id="highscore"></div>
     </div>
 
     <section>
@@ -31,8 +29,11 @@
         </div>
       </div>
       <div id="scorePanel">
+
+
         
       </div>
+      <div id="highscore"></div>
     </section>
     <section id="game-box">
       <!-- Canvas will be added here -->
@@ -86,7 +87,7 @@
       <h3>Highscore</h3>
       <ol>
         {{#list}}
-        <li>{{total}}</li>
+        <li class="{{htmlClass}}">{{total}}</li>
         {{/list}}
       </ul>
     </script>
