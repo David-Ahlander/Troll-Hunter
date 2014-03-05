@@ -158,6 +158,7 @@ function moveEnemyLeft(enemy, dt) {
 function moveEnemyRight(enemy, dt) {
 
     enemy.pos[0] += enemy.speed * dt;
+    
 }
 
 function trollMovement(troll, dt) {
@@ -168,7 +169,7 @@ function trollMovement(troll, dt) {
     var index = Math.floor(Math.random() * moveFunctions.length);
 
     if (typeof troll.lastMovementIndex == "undefined" || troll.movementCount <= 0) {
-        troll.movementCount = 50;
+        troll.movementCount = 100;
         troll.lastMovementIndex = index;
     } else {
         troll.movementCount--;
