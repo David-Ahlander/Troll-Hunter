@@ -2,8 +2,13 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: #000000;
-    font-family: sans-serif;
-    color: #757575;
+    font-family: 'Averia Sans Libre', cursive;
+    color: #61ae48;
+}
+
+h3 {
+    margin: 0;
+    margin-bottom: 10px;
 }
 
 canvas {
@@ -31,6 +36,18 @@ section {
 
 section h1 {
     margin: 0;
+    margin-bottom: 30px;
+}
+
+header {
+    width: 200px;
+    height: 206px;
+    display: inline;
+}
+
+header img {
+    margin: 0;
+    padding: 0;
 }
 
 #instructions {
@@ -41,6 +58,7 @@ section h1 {
 #scorePanel {
     float: right;
     width: 200px;
+    margin-top: -6px;
 }
 
 .scoreBoard {
@@ -57,7 +75,7 @@ section h1 {
 #highscore {
     width: 200px;
     position: absolute;
-    top: 300px;
+    top: 164px;
     left: 1021px;
 }
 

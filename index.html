@@ -6,7 +6,7 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-
+    <link href='http://fonts.googleapis.com/css?family=Averia+Sans+Libre' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="app.css">
   </head>
   <body>
@@ -17,17 +17,33 @@
       <h1>GAME OVER</h1>
       <button id="play-again">Hit SPACE to re-play</button>
     </div>
-
     <section>
       <div id="instructions">
-        <h1>TROLL HUNTER</h1>
-        <div>
+        <header>
+          <img src="img/troll-hunter.png">
+        </header>
+        <h3>Instructions</h3>
+        <p>
           move with <span class="key">arrows</span> or <span class="key">wasd</span>
-        </div>
-        <div>
+          <br/>
           shoot with <span class="key">space</span>
-        </div>
+        </p>  
+        <p>
+          Total score =
+          <br/>
+          <br/>
+          Accuracy
+          <br/>
+          + 
+          <br/>
+          Trolls killed * 10
+          <br/> 
+          +
+          <br/>
+          Spiders killed
+        </p>
       </div>
+
       <div id="scorePanel">
 
 
@@ -41,6 +57,7 @@
     <script type="text/template" id="scoreTemplate">
 
         <div class="scoreBoard">
+        <h3>Scoreboard</h3>
           Bullets Fired
           <div class="score">{{bulletFired}}</div>
         </div>
@@ -63,22 +80,6 @@
         <div class="scoreBoard">
         Total score
           <div class="score">{{total}}</div>
-        </div>
-        <div class="scoreBoard">
-        <br/>
-        <br/>
-        Total score =
-        <br/>
-        <br/>
-        Accuracy
-        <br/>
-        + 
-        <br/>
-        Trolls killed * 10
-        <br/> 
-        +
-        <br/>
-        Spiders killed
         </div>
 
     </script>
