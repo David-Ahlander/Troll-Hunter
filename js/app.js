@@ -225,6 +225,10 @@ function handleInput(dt) {
         lastFire = Date.now();
         level.scores.bulletFired += 1;
     }
+
+    if (isGameOver && input.isDown('RETURN')) {
+        location.reload(true);
+    };
 }
 
 function updateEntities(dt) {
@@ -466,7 +470,6 @@ function gameOver() {
 
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('game-over-overlay').style.display = 'block';
-    document.getElementById('play-again').focus();
 
 }
 

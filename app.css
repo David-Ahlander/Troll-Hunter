@@ -128,18 +128,15 @@ header img {
     font-size: 3em;
 }
 
-#game-over button {
+#game-over .button {
     font-size: 2em;
     font-family: 'Averia Sans Libre', cursive;
     background: none;
     color: #61ae48;
     border: none;
+    cursor:pointer;
 }
 
-#game-over button:hover {
+#game-over .button:hover {
     color: #ffffff;
-}
-#game-over button:focus
-{ 
-outline: none;
 }
