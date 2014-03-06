@@ -31,8 +31,8 @@ function main() {
     var now = Date.now();
     var dt = (now - lastTime) / 1000.0;
 
-    update(dt);
-    render();
+    game.update(dt);
+    game.render();
 
     lastTime = now;
     requestAnimFrame(main);
@@ -49,6 +49,7 @@ function init() {
     });
 
     game = new Game({
+        canvas: canvas
     });
 
     lastTime = Date.now();
@@ -71,8 +72,6 @@ resources.load([
 resources.onReady(init);
 
 var lastFire = Date.now();
-var gameTime = 0;
-var isGameOver;
 var terrainPattern;
 
 var numOfSpiders = 5;
