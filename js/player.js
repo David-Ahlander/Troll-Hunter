@@ -1,11 +1,12 @@
 (function(){
     function Player(pos){
        this.pos = pos;
-    }   
+    }
 
     Player.prototype = {
         sprite: new Sprite('img/wizard2.png', [110, 0], [55, 55]),  
         moveSpeed: 300,
+		bomb: null,
         attackSpeed: 400
     };
 
@@ -26,7 +27,7 @@
     };
 
     Player.prototype.moveRight = function(dt){
-        this.pos[0] += player.moveSpeed * dt;
+        this.pos[0] += this.moveSpeed * dt;
         this.sprite.pos[0] = 110;
     };
 
