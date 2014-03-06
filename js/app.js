@@ -618,7 +618,7 @@ function bulletsHitSpiders(){
                 // Remove the bullet and stop this iteration
                 level.player.shotsFired.splice(j, 1);
 
-                if(Math.floor((Math.random()*1)+1)==1)
+                if(Math.floor((Math.random()*10)+1)==1)
                 {
                     level.bombs.push({
                         pos: level.spiders[i].pos,
