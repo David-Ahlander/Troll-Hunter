@@ -192,15 +192,14 @@ function handleInput(dt) {
 
         if(level.player.bomb)
         {
-            level.bullets.push({
+            level.player.shotsFired.push(new Bomb({
                 pos: [x, y],
-                dir: level.player.pointedAt(),
-                sprite: new Sprite('img/bomb.png', [0, 0], [31, 31])
-            });
-            level.player.bomb = null;
+                dir: level.player.pointedAt()
+            }));
+            level.player.bomb=null;
         }
         else{
-            level.bullets.push({
+            level.player.shotsFired.push({
                 pos: [x, y],
                 dir: level.player.pointedAt(),
                 sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21])
@@ -234,8 +233,8 @@ function updateEntities(dt) {
     // level.increaseLevel();
 
     // Update all the bullets
-    for(var i=0; i<level.bullets.length; i++) {
-        var bullet = level.bullets[i];
+    for(var i=0; i<level.player.shotsFired.length; i++) {
+        var bullet = level.player.shotsFired[i];
 
         switch(bullet.dir) {
         case 'up': bullet.pos[1] -= level.player.attackSpeed * dt; break;
@@ -249,7 +248,7 @@ function updateEntities(dt) {
         // Remove the bullet if it goes offscreen
         if(bullet.pos[1] < 0 || bullet.pos[1] > canvas.height ||
            bullet.pos[0] < 0 || bullet.pos[0] > canvas.width) {
-            level.bullets.splice(i, 1);
+            level.player.shotsFired.splice(i, 1);
             i--;
         }
     }
@@ -286,9 +285,10 @@ function bulletsHitsEnemy(enemy, onHit) {
     var enemyPos = enemy.pos;
     var enemySpriteSize = enemy.sprite.size;
 
-    for(var j=0; j<level.bullets.length; j++) {
-        var pos = level.bullets[j].pos;
-        var size = level.bullets[j].sprite.size;
+    for(var j=0; j<level.player.shotsFired.length; j++) {
+        var pos = level.player.shotsFired[j].pos;
+        var size = level.player.shotsFired[j].sprite.size;
+
 
         if(boxCollides(enemyPos, enemySpriteSize, pos, size)) {
             enemy.hp--;
@@ -309,7 +309,8 @@ function bulletsHitsEnemy(enemy, onHit) {
             });
 
             // Remove the bullet and stop this iteration
-            level.bullets.splice(j, 1);
+            level.player.shotsFired.splice(j, 1);
+
         }
     }
 }
@@ -405,10 +406,11 @@ function render() {
         }
     }
 
-    renderEntities(level.bullets);
+    renderEntities(level.player.shotsFired);
     renderEntities(level.explosions);
     renderEntities(level.bombs);
     renderEntities(level.spiders);
+
 };
 
 function renderEntities(list) {
@@ -554,9 +556,9 @@ function bulletsHitTree(){
 
     var treespritesize = level.trees[0].sprite.size;
 
-    for(var j=0; j<level.bullets.length; j++) {
-        var pos = level.bullets[j].pos;
-        var size = level.bullets[j].sprite.size;
+    for(var j=0; j<level.player.shotsFired.length; j++) {
+        var pos = level.player.shotsFired[j].pos;
+        var size = level.player.shotsFired[j].sprite.size;
 
         for(var i=0;i<level.trees.length;i++)
         {
@@ -573,7 +575,7 @@ function bulletsHitTree(){
                                        true)
                 });
                 // Remove the bullet and stop this iteration
-                level.bullets.splice(j, 1);
+                level.player.shotsFired.splice(j, 1);
             }
         }
     }
@@ -584,9 +586,9 @@ function bulletsHitSpiders(){
 
     var spidersize = level.spiders[0].sprite.size;
 
-    for(var j=0; j<level.bullets.length; j++) {
-        var pos = level.bullets[j].pos;
-        var size = level.bullets[j].sprite.size;
+    for(var j=0; j<level.player.shotsFired.length; j++) {
+        var pos = level.player.shotsFired[j].pos;
+        var size = level.player.shotsFired[j].sprite.size;
 
         for(var i=0;i<level.spiders.length;i++)
         {
@@ -603,9 +605,9 @@ function bulletsHitSpiders(){
                                        true)
                 });
                 // Remove the bullet and stop this iteration
-                level.bullets.splice(j, 1);
+                level.player.shotsFired.splice(j, 1);
 
-                if(Math.floor((Math.random()*10)+1)==1)
+                if(Math.floor((Math.random()*1)+1)==1)
                 {
                     level.bombs.push({
                         pos: level.spiders[i].pos,

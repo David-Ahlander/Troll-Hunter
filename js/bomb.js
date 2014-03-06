@@ -1,14 +1,15 @@
 (function () {
-    function Bomb(pos) {
-        this.pos = pos;
+    function Bomb(options) {
+        options = options || {};
+        this.dir = options.dir;
+        this.pos =  options.pos;
+        this.sprite = new Sprite('img/bomb.png', [0, 0], [31, 31]);
     }
 
-    Bomb.prototype = {
-        damage: 50,
-        speed:  50,
-        sprite: new Sprite('img/bomb.png', [0, 0], [31, 31]),
-        armed: false
-    }
+    Bomb.prototype = new Weapon({
+        speed: 50,
+        damage: 50
+    });
 
     window.Bomb = Bomb;
 })();

@@ -47,6 +47,8 @@
             return direction;
     };
 
+    Player.prototype.shotsFired = [];
+
     window.Player = Player;
 
 })();
