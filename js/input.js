@@ -7,6 +7,8 @@
         var key;
 
         switch(code) {
+        case 13:
+            key = 'RETURN'; break;
         case 32:
             key = 'SPACE'; break;
         case 37:
