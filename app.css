@@ -117,14 +117,29 @@ header img {
     color: white;
 }
 
+#game-over img {
+    width: 570px;
+    height: 120px;
+    margin: 0 auto;
+    display: block;
+}
+
 #game-over h1 {
     font-size: 3em;
 }
 
 #game-over button {
-    font-size: 1.5em;
+    font-size: 2em;
+    font-family: 'Averia Sans Libre', cursive;
+    background: none;
+    color: #61ae48;
+    border: none;
 }
 
 #game-over button:hover {
-    border: 4px solid #000;
+    color: #ffffff;
+}
+#game-over button:focus
+{ 
+outline: none;
 }
