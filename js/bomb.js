@@ -10,10 +10,5 @@
 
     Bomb.prototype = new Weapon();
 
-    function stats(){
-        console.log(this.damage, this.speed, this.aoe);
-    }
-
     window.Bomb = Bomb;
 })();
-

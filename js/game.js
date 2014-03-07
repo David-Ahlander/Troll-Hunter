@@ -217,8 +217,6 @@
                     enemy.hp = enemy.hp - damage;
                     var speed = this.level.player.shotsFired[j].speed;
                     var aoe = this.level.player.shotsFired[j].aoe;
-
-                    console.log(damage, speed, aoe);
                 }   
                 else {
                     enemy.hp--;
