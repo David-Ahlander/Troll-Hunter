@@ -163,7 +163,9 @@
         for (var n = 0; n < this.level.trees.length; n++) {
             this.level.trees[n].sprite.update(dt);
         }
-        this.level.cave.sprite.update(dt);
+        for (var n = 0; n < this.level.caves.length; n++) {
+            this.level.caves[n].sprite.update(dt);
+        }
 
         // this.level.increaseLevel();
 
@@ -323,7 +325,9 @@
 
         // Render the player if the game isn't over
         if(!this.isGameOver) {
-            this.renderEntity(this.level.cave);
+            for (var n = 0; n < this.level.caves.length; n++) {
+                this.renderEntity(this.level.caves[n]);
+            }
             this.renderEntity(this.level.player);
             for (var n = 0; n < this.level.trees.length; n++) {
                 this.renderEntity(this.level.trees[n]);
