@@ -36,12 +36,16 @@
 
     Level.prototype.spawnTroll = function (opts) {
         opts = opts || {};
-        opts.pos = opts.pos || [500, canvas.height - 600];
+        opts.pos = opts.pos || this.randomCave().midPos();
         this.trolls.push(new Troll(opts));
     };
 
     Level.prototype.spawnTree = function () {
         this.trees.push(new Tree().randomizePosition());
+    };
+
+    Level.prototype.randomCave = function () {
+        return randomFromArray(this.caves);
     };
 
     window.Level = Level;
