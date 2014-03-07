@@ -1,10 +1,10 @@
 (function () {
-    function Level(opts) {
-        opts = opts || {};
-        this.nr     = opts.nr;
-        this.player = opts.player;
-        this.scores = opts.scores;
-        this.canvas = opts.canvas;
+    function Level(options) {
+        options = options || {};
+        this.nr     = options.nr;
+        this.player = options.player;
+        this.scores = options.scores;
+        this.canvas = options.canvas;
 
         this.caves      = [];
         this.trolls     = [];
@@ -28,16 +28,16 @@
         this.spawnTroll();
     };
 
-    Level.prototype.spawnCave = function (opts) {
-        opts = opts || {};
-        opts.pos = opts.pos || [590, this.canvas.height - 600];
-        this.caves.push(new Cave(opts));
+    Level.prototype.spawnCave = function (options) {
+        options = options || {};
+        options.pos = options.pos || [590, this.canvas.height - 600];
+        this.caves.push(new Cave(options));
     };
 
-    Level.prototype.spawnTroll = function (opts) {
-        opts = opts || {};
-        opts.pos = opts.pos || this.randomCave().midPos();
-        this.trolls.push(new Troll(opts));
+    Level.prototype.spawnTroll = function (options) {
+        options = options || {};
+        options.pos = options.pos || this.randomCave().midPos();
+        this.trolls.push(new Troll(options));
     };
 
     Level.prototype.spawnTree = function () {

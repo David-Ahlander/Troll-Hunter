@@ -1,8 +1,8 @@
 (function () {
-    function Game(opts) {
-        opts = opts || {};
+    function Game(options) {
+        options = options || {};
         this.player = new Player({});
-        this.canvas = opts.canvas;
+        this.canvas = options.canvas;
         this.gameTime = 0;
         this.isGameOver = false;
         this.reset();
