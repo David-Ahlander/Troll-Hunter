@@ -40,12 +40,22 @@
         this.trolls.push(new Troll(options));
     };
 
+    Level.prototype.spawnSpider = function (options) {
+        options = options || {};
+        options.pos = options.pos || this.randomTree().midPos();
+        this.spiders.push(new Spider(options));
+    };
+
     Level.prototype.spawnTree = function () {
         this.trees.push(new Tree().randomizePosition());
     };
 
     Level.prototype.randomCave = function () {
         return randomFromArray(this.caves);
+    };
+
+    Level.prototype.randomTree = function () {
+        return randomFromArray(this.trees);
     };
 
     window.Level = Level;
