@@ -212,7 +212,17 @@
 
 
             if(boxCollides(enemyPos, enemySpriteSize, pos, size)) {
-                enemy.hp--;
+                
+                if(damage = this.level.player.shotsFired[j].damage){
+                    enemy.hp = enemy.hp - damage;
+                    var speed = this.level.player.shotsFired[j].speed;
+                    var aoe = this.level.player.shotsFired[j].aoe;
+
+                    console.log(damage, speed, aoe);
+                }   
+                else {
+                    enemy.hp--;
+                }
                 onHit();
                 // Add this.level.scores.bulletHits
                 this.level.scores.bulletHits += 1;

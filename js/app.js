@@ -86,7 +86,6 @@ function randomFromArray(array) {
 }
 
 // Collisions
-
 function collides(x, y, r, b, x2, y2, r2, b2) {
     return !(r <= x2 || x > r2 ||
              b <= y2 || y > b2);
