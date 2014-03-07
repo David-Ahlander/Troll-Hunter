@@ -129,12 +129,12 @@
                 }));
                 this.level.player.bomb=null;
             }
-            else{
-                this.level.player.shotsFired.push({
+            else
+            {
+                this.level.player.shotsFired.push(new Bullet({
                     pos: [x, y],
-                    dir: this.level.player.pointedAt(),
-                    sprite: new Sprite('img/IonShot.png', [0, 0], [21, 21])
-                });
+                    dir: this.level.player.pointedAt()
+                }));
             }
 
             // TODO (FUTURE EVENT)
@@ -215,8 +215,6 @@
                 
                 if(damage = this.level.player.shotsFired[j].damage){
                     enemy.hp = enemy.hp - damage;
-                    var speed = this.level.player.shotsFired[j].speed;
-                    var aoe = this.level.player.shotsFired[j].aoe;
                 }   
                 else {
                     enemy.hp--;
