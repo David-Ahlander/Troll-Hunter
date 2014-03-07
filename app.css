@@ -55,6 +55,14 @@ header img {
     width: 200px;
 }
 
+#instructions .imgText {
+    line-height: 36px;
+}
+
+#instructions img {
+    vertical-align:middle;
+}
+
 #scorePanel {
     float: right;
     width: 200px;
