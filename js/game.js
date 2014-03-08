@@ -7,6 +7,8 @@
         this.gameTime = 0;
         this.isGameOver = false;
         this.reset();
+
+        highscore.add(this.level.player.score);
     }
 
     // Update game objects
@@ -28,7 +30,9 @@
 
         var template = document.getElementById('highscoreTemplate').innerHTML;
         document.getElementById('highscore')
-            .innerHTML = Mustache.render(template, highscore.mustacheData(this.level.player.score));
+            .innerHTML = Mustache.render(template, {
+                list: highscore.sort().take(5)
+            });
 
         this.checkCollisions();
 
@@ -376,7 +380,6 @@
 
         this.isGameOver = true;
 
-        highscore.add(this.level.player.score);
         highscore.save();
         // var mustacheData = {
         //     list: highscore.list.slice(0, 5)
@@ -401,7 +404,6 @@
         this.level = new Level({
             nr: 1,
             player: this.player,
-            scores: new Score,
             canvas: this.canvas
         });
     };
