@@ -2,6 +2,7 @@
     function Game(options) {
         options = options || {};
         this.player = new Player({});
+        this.player.score = new Score;
         this.canvas = options.canvas;
         this.gameTime = 0;
         this.isGameOver = false;
@@ -23,11 +24,11 @@
         var template = document.getElementById('scoreTemplate').innerHTML;
 
         document.getElementById('scorePanel')
-            .innerHTML = Mustache.render(template, this.level.scores.calculate());
+            .innerHTML = Mustache.render(template, this.level.player.score.calculate());
 
         var template = document.getElementById('highscoreTemplate').innerHTML;
         document.getElementById('highscore')
-            .innerHTML = Mustache.render(template, highscore.mustacheData(this.level.scores));
+            .innerHTML = Mustache.render(template, highscore.mustacheData(this.level.player.score));
 
         this.checkCollisions();
 
@@ -143,7 +144,7 @@
             // }
 
             lastFire = Date.now();
-            this.level.scores.bulletFired += 1;
+            this.level.player.score.bulletFired += 1;
         }
 
         if (this.isGameOver && input.isDown('RETURN')) {
@@ -219,8 +220,8 @@
                     enemy.hp--;
                 }
                 onHit();
-                // Add this.level.scores.bulletHits
-                this.level.scores.bulletHits += 1;
+                // Add this.level.player.score.bulletHits
+                this.level.player.score.bulletHits += 1;
 
                 // Add an explosion
                 this.level.explosions.push({
@@ -375,7 +376,7 @@
 
         this.isGameOver = true;
 
-        highscore.add(this.level.scores);
+        highscore.add(this.level.player.score);
         highscore.save();
         // var mustacheData = {
         //     list: highscore.list.slice(0, 5)
@@ -471,7 +472,7 @@
                 });
                 }, 2000);
 
-                that.level.scores.trollsKilled += 1;
+                that.level.player.score.trollsKilled += 1;
 
                 //Increase level here
             };
@@ -545,8 +546,8 @@
                     this.level.spiders.splice(i,1);
                     logger.debug('Killed spider at ' + pos);
 
-                    this.level.scores.spidersKilled += 1;
-                    this.level.scores.bulletHits += 1;
+                    this.level.player.score.spidersKilled += 1;
+                    this.level.player.score.bulletHits += 1;
                 }
             }
         }
