@@ -400,7 +400,7 @@
         this.level = new Level({
             nr: 1,
             player: this.player,
-            scores: new Scores,
+            scores: new Score,
             canvas: this.canvas
         });
     };

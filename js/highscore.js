@@ -10,7 +10,7 @@
         
         var list = JSON.parse(localStorage.getItem(this.storage)) || [];
         for (var n = 0; n < list.length; n++) {
-            list[n] = new Scores(list[n]);
+            list[n] = new Score(list[n]);
         }
 
         console.log(list);
