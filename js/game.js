@@ -466,15 +466,19 @@
             if (troll && troll.hp <= 0) {
                 that.level.trolls.splice(index, 1);
 
+                that.level.player.score.trollsKilled += 1;
+
                 logger.debug('Killed troll at ' + troll.pos);
+
+                that.level.player.score.trollScore += troll.killScore();
 
                 setTimeout(function () {
                 that.level.spawnTroll({
-                    maxHp: troll.maxHp * 2
+                    level: troll.level + 1
                 });
                 }, 2000);
 
-                that.level.player.score.trollsKilled += 1;
+            
 
                 //Increase level here
             };

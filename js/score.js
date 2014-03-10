@@ -7,6 +7,7 @@
         this.spidersKilled = options.spidersKilled || 0;
         this.accuracy      = options.accuracy      || 0;
         this.total         = options.total         || 0;
+        this.trollScore    = options.trollScore    || 0;
     }
 
     Score.prototype.setAccuracy = function(){
@@ -25,7 +26,7 @@
 
         var totalScore = 0;
 
-        totalScore = this.accuracy + (this.trollsKilled * 10) + this.spidersKilled;
+        totalScore = this.accuracy + this.trollScore + this.spidersKilled;
         this.total = totalScore;
     };
 
@@ -38,3 +39,16 @@
     window.Score = Score;
 
 })();
+
+
+troll = new Troll;
+
+// Troll dör
+// scores.trollScore += troll.killScore();
+// troll.setLevel(troll.level + 1);
+// troll.resetHp();
+
+
+// newTroll = new Troll({level: troll.level + 1});
+
+
