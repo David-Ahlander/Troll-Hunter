@@ -1,5 +1,5 @@
 (function (){
-    function Scores (options) {
+    function Score (options) {
         options = options || {};
         this.bulletFired   = options.bulletFired   || 0;
         this.bulletHits    = options.bulletHits    || 0;
@@ -9,7 +9,7 @@
         this.total         = options.total         || 0;
     }
 
-    Scores.prototype.setAccuracy = function(){
+    Score.prototype.setAccuracy = function(){
 
         var accuracy = 0;
 
@@ -21,7 +21,7 @@
     }
 
 
-    Scores.prototype.setTotal = function(){
+    Score.prototype.setTotal = function(){
 
         var totalScore = 0;
 
@@ -29,12 +29,12 @@
         this.total = totalScore;
     };
 
-    Scores.prototype.calculate = function () {
+    Score.prototype.calculate = function () {
         this.setAccuracy();
         this.setTotal();
         return this;
     };
 
-    window.Scores = Scores;
+    window.Score = Score;
 
 })();

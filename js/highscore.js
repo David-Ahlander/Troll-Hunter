@@ -7,10 +7,10 @@
     }
 
     Highscore.prototype.load = function () {
-        
+
         var list = JSON.parse(localStorage.getItem(this.storage)) || [];
         for (var n = 0; n < list.length; n++) {
-            list[n] = new Scores(list[n]);
+            list[n] = new Score(list[n]);
         }
 
         console.log(list);
@@ -25,36 +25,32 @@
     };
 
     Highscore.prototype.add = function (score) {
+        score.htmlClass = 'current';
 
         for (var n = 0; n < this.list.length; n++) {
+            this.list[n].htmlClass = undefined;
+
             if (score.total > this.list[n].total) {
 
                 this.list.splice(n, 0, score);
                 return this;
             };
-
         }
-       
+
         this.list.push(score);
 
         return this;
     };
 
-    Highscore.prototype.mustacheData = function (currentScores) {
-
-        var mustacheData = {
-            list: this.list.slice(0, 5)
-        };
-
-        currentScores.htmlClass = "current";
-
-        mustacheData.list.push(currentScores);
-        mustacheData.list.sort(function(a, b) {
-            return a.total < b.total;
+    Highscore.prototype.sort = function () {
+        this.list.sort(function (a, b) {
+            return b.total - a.total;
         });
+        return this;
+    };
 
-        return mustacheData;
-
+    Highscore.prototype.take = function (count) {
+        return this.list.slice(0, count);
     };
 
     window.Highscore = Highscore;
