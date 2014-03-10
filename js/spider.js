@@ -1,7 +1,7 @@
 (function () {
     function Spider(options) {
         options = options || {};
-        this.pos = options.pos;
+        this.pos = [options.pos[0], options.pos[1]];
     }
 
     Spider.prototype = {

@@ -77,16 +77,12 @@
     };
 
     Game.prototype.spiderMovement = function (dt) {
-        if(this.level.spiders.length < numOfSpiders)
-        {
-            this.level.spawnSpider();
-        }
-
-        var moveFunctions = [this.moveEnemyUp, this.moveEnemyDown, this.moveEnemyLeft, this.moveEnemyRight];
-        var index = Math.floor(Math.random() * moveFunctions.length);
 
         for(var i=0;i<this.level.spiders.length;i++)
         {
+            var moveFunctions = [this.moveEnemyUp, this.moveEnemyDown, this.moveEnemyLeft, this.moveEnemyRight];
+            var index = Math.floor(Math.random() * moveFunctions.length);
+
             var spider = this.level.spiders[i];
 
             if (typeof spider.lastMovementIndex == "undefined" || spider.movementCount <= 0) {
@@ -516,6 +512,7 @@
     };
 
     Game.prototype.bulletsHitSpiders = function () {
+        if (!this.level.spiders.length) return;
         // Check if bullets hit trees
 
         var spidersize = this.level.spiders[0].sprite.size;
@@ -554,6 +551,16 @@
 
                     this.level.player.score.spidersKilled += 1;
                     this.level.player.score.bulletHits += 1;
+
+                    if(this.level.spiders.length < numOfSpiders)
+                    {
+                        var self = this;
+                        setTimeout(function () {
+                
+                        self.level.spawnSpider();
+
+                        }, 7000);
+                    }
                 }
             }
         }
