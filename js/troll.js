@@ -27,7 +27,7 @@
 
     Troll.prototype.setLevel = function(level) {
         var baseHp = 5;
-        this.maxHp = level * baseHp;
+        this.maxHp = baseHp * Math.pow(2, level - 1);
         this.level = level;
     };
 
