@@ -47,6 +47,7 @@
     };
 
     Level.prototype.spawnSpider = function (options) {
+        if (!this.trees.length) return;
         options = options || {};
         options.pos = options.pos || this.randomTree().midPos();
         this.spiders.push(new Spider(options));
