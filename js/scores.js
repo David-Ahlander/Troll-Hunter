@@ -1,12 +1,12 @@
 (function (){
-    function Scores (opts) {
-        opts = opts || {};
-        this.bulletFired   = opts.bulletFired   || 0;
-        this.bulletHits    = opts.bulletHits    || 0;
-        this.trollsKilled  = opts.trollsKilled  || 0;
-        this.spidersKilled = opts.spidersKilled || 0;
-        this.accuracy      = opts.accuracy      || 0;
-        this.total         = opts.total         || 0;
+    function Scores (options) {
+        options = options || {};
+        this.bulletFired   = options.bulletFired   || 0;
+        this.bulletHits    = options.bulletHits    || 0;
+        this.trollsKilled  = options.trollsKilled  || 0;
+        this.spidersKilled = options.spidersKilled || 0;
+        this.accuracy      = options.accuracy      || 0;
+        this.total         = options.total         || 0;
     }
 
     Scores.prototype.setAccuracy = function(){

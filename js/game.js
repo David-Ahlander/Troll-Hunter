@@ -1,8 +1,8 @@
 (function () {
-    function Game(opts) {
-        opts = opts || {};
+    function Game(options) {
+        options = options || {};
         this.player = new Player({});
-        this.canvas = opts.canvas;
+        this.canvas = options.canvas;
         this.gameTime = 0;
         this.isGameOver = false;
         this.reset();
@@ -74,10 +74,7 @@
     Game.prototype.spiderMovement = function (dt) {
         if(this.level.spiders.length < numOfSpiders)
         {
-            var spawnTree = randomFromArray(this.level.trees);
-            var posX = spawnTree.pos[0] + (spawnTree.sprite.size[0] / 2);
-            var posY = spawnTree.pos[1] + (spawnTree.sprite.size[1] / 4);
-            this.level.spiders.push(new Spider([posX, posY]));
+            this.level.spawnSpider();
         }
 
         var moveFunctions = [this.moveEnemyUp, this.moveEnemyDown, this.moveEnemyLeft, this.moveEnemyRight];

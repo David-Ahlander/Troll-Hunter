@@ -1,7 +1,7 @@
 (function () {
-    function Highscore(opts) {
-        opts = opts || {};
-        this.storage = opts.storage || 'highscore';
+    function Highscore(options) {
+        options = options || {};
+        this.storage = options.storage || 'highscore';
         this.list = [];
         this.load();
     }

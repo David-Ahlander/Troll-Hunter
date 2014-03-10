@@ -1,5 +1,5 @@
 (function () {
-    function Logger(opts) {
+    function Logger(options) {
     }
 
     Logger.prototype = {

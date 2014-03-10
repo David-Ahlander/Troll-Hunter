@@ -8,5 +8,7 @@
         sprite: new Sprite('img/cave.png', [0, 0], [210, 141])
     };
 
+    entityMixin.call(Cave.prototype);
+
     window.Cave = Cave;
 })();
