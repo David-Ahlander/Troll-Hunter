@@ -407,7 +407,7 @@
     Game.prototype.checkHitTree = function (tree) {
         // Unable player to walk through trees
 
-        if(boxCollides(this.level.player.pos, this.level.player.sprite.size, tree.pos, tree.sprite.size)) {
+        if(entitiesCollides(this.level.player, tree)) {
 
             if (this.level.player.pointedAt() == 'up') {
                 this.level.player.pos[1] = tree.pos[1] + 109;
@@ -426,7 +426,7 @@
 
     Game.prototype.checkHitTroll = function (troll) {
         // Unable player to walk through trees
-        if(troll && boxCollides(this.level.player.pos, this.level.player.sprite.size, troll.pos, troll.sprite.size)) {
+        if(troll && entitiesCollides(this.level.player, troll)) {
             this.gameOver();
         }
     };
@@ -435,7 +435,7 @@
         //Check if spiders catch Züper Alex
         for(var i=0;i<this.level.spiders.length;i++){
             var spider = this.level.spiders[i];
-            if(spider && boxCollides(this.level.player.pos, this.level.player.sprite.size, spider.pos, spider.sprite.size)) {
+            if(spider && entitiesCollides(this.level.player, spider)) {
                 this.gameOver();
             }
         }
@@ -444,7 +444,7 @@
     Game.prototype.checkPickUpBomb = function () {
         for(var i = 0; i < this.level.bombs.length; i++){
             var bomb = this.level.bombs[i];
-            if(bomb && boxCollides(this.level.player.pos, this.level.player.sprite.size, bomb.pos, bomb.sprite.size)) {
+            if(bomb && entitiesCollides(this.level.player, bomb)) {
                 this.level.player.bomb = bomb;
                 bomb.pos = this.level.player.pos;
                 this.level.bombs.splice(i,1);
@@ -453,7 +453,7 @@
     };
 
     Game.prototype.bulletsHitTroll = function (troll, index) {
-        // Unable player to walk through trees
+        //Check if bullets hit troll
 
         var that = this;
 
@@ -483,19 +483,15 @@
 
     Game.prototype.bulletsHitTree = function () {
         // Check if bullets hit trees
-
-        var treespritesize = this.level.trees[0].sprite.size;
-
         for(var j=0; j<this.level.player.shotsFired.length; j++) {
-            var pos = this.level.player.shotsFired[j].pos;
-            var size = this.level.player.shotsFired[j].sprite.size;
+            var bullet = this.level.player.shotsFired[j];
 
             for(var i=0;i<this.level.trees.length;i++)
             {
-                if(boxCollides(this.level.trees[i].pos, treespritesize, pos, size)) {
+                if(bullet && entitiesCollides(this.level.trees[i], bullet)) {
                 // Add an explosion
                     this.level.explosions.push({
-                        pos: pos,
+                        pos: bullet.pos,
                         sprite: new Sprite('img/sprites.png',
                                         [0, 116],
                                         [39, 40],
@@ -514,16 +510,13 @@
     Game.prototype.bulletsHitSpiders = function () {
         if (!this.level.spiders.length) return;
         // Check if bullets hit trees
-
-        var spidersize = this.level.spiders[0].sprite.size;
-
         for(var j=0; j<this.level.player.shotsFired.length; j++) {
-            var pos = this.level.player.shotsFired[j].pos;
-            var size = this.level.player.shotsFired[j].sprite.size;
+            var bullet = this.level.player.shotsFired[j];
+
 
             for(var i=0;i<this.level.spiders.length;i++)
             {
-                if(boxCollides(this.level.spiders[i].pos, spidersize, pos, size)) {
+                if(bullet && entitiesCollides(this.level.spiders[i], bullet)) {
                 // Add an explosion
                     this.level.explosions.push({
                         pos: this.level.spiders[i].pos,
@@ -538,7 +531,7 @@
                     // Remove the bullet and stop this iteration
                     this.level.player.shotsFired.splice(j, 1);
 
-                    if(Math.floor((Math.random()*10)+1)==1)
+                    if(Math.floor((Math.random()*1)+1)==1)
                     {
                         this.level.bombs.push({
                             pos: this.level.spiders[i].pos,
@@ -547,7 +540,7 @@
                     }
 
                     this.level.spiders.splice(i,1);
-                    logger.debug('Killed spider at ' + pos);
+                    logger.debug('Killed spider at ' + bullet.pos);
 
                     this.level.player.score.spidersKilled += 1;
                     this.level.player.score.bulletHits += 1;
