@@ -486,21 +486,22 @@
             if (troll && troll.hp <= 0) {
                 that.level.trolls.splice(index, 1);
 
+                that.level.trollsKilled += 1;
                 that.level.player.score.trollsKilled += 1;
 
                 logger.debug('Killed troll at ' + troll.pos);
 
                 that.level.player.score.trollScore += troll.killScore();
 
-                setTimeout(function () {
-                that.level.spawnTroll({
-                    level: troll.level + 1
-                });
-                }, 2000);
-
-            
-
-                //Increase level here
+                if (that.level.goalsFulfilled()) {
+                    that.nextLevel();
+                } else {
+                    setTimeout(function () {
+                        that.level.spawnTroll({
+                            level: troll.level + 1
+                        });
+                    }, 2000);
+                }
             };
         });
     };
@@ -526,6 +527,9 @@
 
                         logger.debug('Destroyed tree at ' + tree.pos);
 
+                        if (this.level.goalsFulfilled()) {
+                            this.nextLevel();
+                        }
                     }
 
                     // Add this.level.player.score.bulletHits

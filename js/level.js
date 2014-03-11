@@ -3,7 +3,6 @@
         options = options || {};
         this.nr     = options.nr;
         this.player = options.player;
-        this.scores = options.scores;
         this.canvas = options.canvas;
 
         this.caves      = [];
@@ -15,6 +14,22 @@
         this.bombs      = [];
         this.spawnEntities();
     }
+
+    Level.prototype = {
+        trollsKilled: 0
+    };
+
+    Level.prototype.goalsFulfilled = function () {
+        return this.trollsKilled >= 2 &&
+               this.allTreesDead();
+    };
+
+    Level.prototype.allTreesDead = function () {
+        for (var n = 0; n < this.trees.length; n++) {
+            if (this.trees[n].hp > 0) return false;
+        }
+        return true;
+    };
 
     Level.prototype.spawnEntities = function () {
         this.player.pos = [50, this.canvas.height / 2];
