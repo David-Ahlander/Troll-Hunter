@@ -410,16 +410,16 @@
         if(entitiesCollides(this.level.player, tree)) {
 
             if (this.level.player.pointedAt() == 'up') {
-                this.level.player.pos[1] = tree.pos[1] + 109;
+                this.level.player.pos[1] = tree.pos[1] + tree.sprite.size[1] + 1;
             }
             if (this.level.player.pointedAt() == 'down') {
-                this.level.player.pos[1] = tree.pos[1] - 55;
+                this.level.player.pos[1] = tree.pos[1] - this.level.player.sprite.size[1];
             }
             if (this.level.player.pointedAt() == 'right') {
-                this.level.player.pos[0] = tree.pos[0] - 55;
+                this.level.player.pos[0] = tree.pos[0] - this.level.player.sprite.size[0];
             }
             if (this.level.player.pointedAt() == 'left') {
-                this.level.player.pos[0] = tree.pos[0] + 121;
+                this.level.player.pos[0] = tree.pos[0] + tree.sprite.size[0] + 1;
             }
         }
     };
@@ -496,9 +496,12 @@
                     this.level.trees[i].decreaseHp(this.level.player.shotsFired[j].damage);
 
                     if (tree.hp <= 0) {
-                        this.level.trees.splice(i, 1);
+
+                        tree.killTree();
+                        // this.level.trees.splice(i, 1);
 
                         logger.debug('Destroyed tree at ' + tree.pos);
+
                     }
 
                     // Add this.level.player.score.bulletHits

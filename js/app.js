@@ -67,7 +67,8 @@ resources.load([
     'img/background.png',
     'img/IonShot.png',
     'img/cave_spider.png',
-    'img/bomb.png'
+    'img/bomb.png',
+    'img/dead-tree.png'
 ]);
 resources.onReady(init);
 
