@@ -3,12 +3,12 @@
         options = options || {};
         this.pos = options.pos || [0, 0];
         this.sprite = new Sprite('img/tree.png', [0, 0], [120, 108]);
-        this.healthBar = new HealthBar(this, [0, 0], [120, 10]);
+        this.healthBar = new HealthBar(this, [35, 0], [50, 5]);
     }
 
     Tree.prototype = {
         hp: 1,
-        maxHp: 1,
+        maxHp: 100,
         killed: false
     };
 
@@ -34,6 +34,7 @@
         };
         this.killed = true;
 
+        console.log(this.hp);
 
         return this;
 
