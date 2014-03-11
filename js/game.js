@@ -12,14 +12,23 @@
         this.isGameOver = false;
         this.gameTime = 0;
 
-        this.level = new Level({
-            nr: 1,
-            player: this.player,
-            canvas: this.canvas
-        });
+        this.nextLevel();
 
         highscore.add(this.level.player.score);
     }
+
+    Game.prototype.nextLevel = function () {
+        var currentLevelNr = this.level && this.level.nr || 0;
+        this.setLevel(currentLevelNr + 1);
+    };
+
+    Game.prototype.setLevel = function (nr) {
+        this.level = new Level({
+            nr: nr,
+            player: this.player,
+            canvas: this.canvas
+        });
+    };
 
     // Update game objects
     Game.prototype.update = function (dt) {
