@@ -11,6 +11,7 @@
     }
 
     Troll.prototype = {
+        damage: 5,
         delay:  500,
         speed:  50,
         sprite: new Sprite('img/troll.png', [0, 0], [200, 160], 5,
