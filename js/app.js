@@ -86,9 +86,9 @@ function randomFromArray(array) {
 }
 
 // Collisions
-function collides(x, y, r, b, x2, y2, r2, b2) {
-    return !(r <= x2 || x > r2 ||
-             b <= y2 || y > b2);
+function collides(posXLeft, posYTop, posXRight, posYBottom, posXLeft2, posYTop2, posXRight2, posYBottom2) {
+    return !(posXRight <= posXLeft2 || posXLeft > posXRight2 ||
+             posYBottom <= posYTop2 || posYTop > posYBottom2);
 }
 
 function boxCollides(pos, size, pos2, size2) {
@@ -98,3 +98,7 @@ function boxCollides(pos, size, pos2, size2) {
                     pos2[0] + size2[0], pos2[1] + size2[1]);
 }
 
+function entitiesCollides(entityOne, entityTwo){
+    return boxCollides(entityOne.pos, entityOne.sprite.size,
+                       entityTwo.pos, entityTwo.sprite.size);
+}
