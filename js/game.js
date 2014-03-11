@@ -488,8 +488,23 @@
 
             for(var i=0;i<this.level.trees.length;i++)
             {
+                var tree = this.level.trees[i];
+                var treespritesize = tree.sprite.size;
+
                 if(bullet && entitiesCollides(this.level.trees[i], bullet)) {
-                // Add an explosion
+                    // Damage Tree
+                    this.level.trees[i].decreaseHp(this.level.player.shotsFired[j].damage);
+
+                    if (tree.hp <= 0) {
+                        this.level.trees.splice(i, 1);
+
+                        logger.debug('Destroyed tree at ' + tree.pos);
+                    }
+
+                    // Add this.level.player.score.bulletHits
+                    this.level.player.score.bulletHits += 1;
+
+                    // Add an explosion
                     this.level.explosions.push({
                         pos: bullet.pos,
                         sprite: new Sprite('img/sprites.png',
@@ -516,8 +531,10 @@
 
             for(var i=0;i<this.level.spiders.length;i++)
             {
+                var spidersize = this.level.spiders[i].sprite.size;
+
                 if(bullet && entitiesCollides(this.level.spiders[i], bullet)) {
-                // Add an explosion
+                    // Add an explosion
                     this.level.explosions.push({
                         pos: this.level.spiders[i].pos,
                         sprite: new Sprite('img/blood.png',
@@ -549,7 +566,7 @@
                     {
                         var self = this;
                         setTimeout(function () {
-                
+
                         self.level.spawnSpider();
 
                         }, 7000);
