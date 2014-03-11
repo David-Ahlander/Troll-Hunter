@@ -47,9 +47,12 @@
     };
 
     Level.prototype.spawnSpider = function (options) {
-        if (!this.trees.length) return;
         options = options || {};
-        options.pos = options.pos || this.randomTree().midPos();
+        if (!options.pos) {
+            var tree = this.randomTree();
+            if (!tree) return;
+            options.pos = tree.midPos()
+        }
         this.spiders.push(new Spider(options));
     };
 
@@ -62,7 +65,13 @@
     };
 
     Level.prototype.randomTree = function () {
-        return randomFromArray(this.trees);
+        var trees = [];
+        for (var n = 0; n < this.trees.length; n++) {
+            if (this.trees[n].hp > 0) {
+              trees.push(this.trees[n]);
+            }
+        }
+        return randomFromArray(trees);
     };
 
     window.Level = Level;
