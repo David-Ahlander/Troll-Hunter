@@ -433,6 +433,20 @@
     Game.prototype.checkHitTroll = function (troll) {
         // Unable player to walk through trees
         if(troll && entitiesCollides(this.level.player, troll)) {
+            
+            if (this.level.player.pointedAt() == 'up') {
+                this.level.player.pos[1] = troll.pos[1] + troll.sprite.size[1] + 1;
+            }
+            if (this.level.player.pointedAt() == 'down') {
+                this.level.player.pos[1] = troll.pos[1] - this.level.player.sprite.size[1];
+            }
+            if (this.level.player.pointedAt() == 'right') {
+                this.level.player.pos[0] = troll.pos[0] - this.level.player.sprite.size[0];
+            }
+            if (this.level.player.pointedAt() == 'left') {
+                this.level.player.pos[0] = troll.pos[0] + troll.sprite.size[0] + 1;
+            }
+
             this.gameOver();
         }
     };
