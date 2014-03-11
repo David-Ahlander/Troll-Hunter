@@ -6,7 +6,17 @@
         this.canvas = options.canvas;
         this.gameTime = 0;
         this.isGameOver = false;
-        this.reset();
+
+        document.getElementById('game-over').style.display = 'none';
+        document.getElementById('game-over-overlay').style.display = 'none';
+        this.isGameOver = false;
+        this.gameTime = 0;
+
+        this.level = new Level({
+            nr: 1,
+            player: this.player,
+            canvas: this.canvas
+        });
 
         highscore.add(this.level.player.score);
     }
@@ -393,21 +403,6 @@
         document.getElementById('game-over').style.display = 'block';
         document.getElementById('game-over-overlay').style.display = 'block';
 
-    };
-
-    // Reset game to original state
-    Game.prototype.reset = function () {
-
-        document.getElementById('game-over').style.display = 'none';
-        document.getElementById('game-over-overlay').style.display = 'none';
-        this.isGameOver = false;
-        this.gameTime = 0;
-
-        this.level = new Level({
-            nr: 1,
-            player: this.player,
-            canvas: this.canvas
-        });
     };
 
     Game.prototype.checkHitTree = function (tree) {
