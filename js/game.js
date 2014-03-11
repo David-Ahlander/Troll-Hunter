@@ -34,6 +34,12 @@
                 list: highscore.sort().take(5)
             });
 
+        var template = document.getElementById('levelTemplate').innerHTML;
+        document.getElementById('levelPanel')
+            .innerHTML = Mustache.render(template, {
+                nr: this.level.nr
+            });
+
         this.checkCollisions();
 
     };
