@@ -247,7 +247,7 @@
         for (var n = 0; n < this.level.trees.length; n++) {
             this.checkHitTree(this.level.trees[n]);
         }
-        for (var n = 0; n < this.level.trees.length; n++) {
+        for (var n = 0; n < this.level.trolls.length; n++) {
             this.checkHitTroll(this.level.trolls[n]);
         }
         this.checkHitSpiders();
