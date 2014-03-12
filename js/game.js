@@ -452,7 +452,9 @@
             }
 
             this.damagePlayer(this.level.player, troll.damage);
-            console.log(this.level.player.hp);
+            if(!this.level.player.invulnerable){
+                this.level.player.setInvulnerable();
+            }
         }
     };
 
@@ -468,10 +470,15 @@
     };
 
     Game.prototype.damagePlayer = function(player, damage){
-        player.decreaseHp(damage);
-        if (player.hp <= 0){
-            this.gameOver();
-        };
+        var hpBefore = player.hp;
+        console.log("damagePlayer " + player.invulnerable);
+        if(!player.invulnerable){
+            player.decreaseHp(damage);
+            if (player.hp <= 0){
+                this.gameOver();
+            }
+        }
+
     };
 
     Game.prototype.checkPickUpBomb = function () {
