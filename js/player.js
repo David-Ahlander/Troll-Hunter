@@ -3,7 +3,11 @@
         options = options || {};
         this.pos   = options.pos;
         this.score = options.score;
-        this.healthBar = new HealthBar(this, [0, -16], [55, 10]);
+        this.healthBar = new HealthBar(this, {
+            pos: [0, -16],
+            size: [55, 10],
+            color: '#00FF00'
+        });
     }
 
     Player.prototype = {
