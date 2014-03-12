@@ -3,11 +3,12 @@
         options = options || {};
         this.pos   = options.pos;
         this.score = options.score;
+        this.healthBar = new HealthBar(this, [0, -16], [55, 10]);
     }
 
     Player.prototype = {
         hp: 20,
-        maxHP: 20,
+        maxHp: 20,
         invulnerable: false,
         sprite: new Sprite('img/wizard2.png', [110, 0], [55, 55]),
         moveSpeed: 300,
