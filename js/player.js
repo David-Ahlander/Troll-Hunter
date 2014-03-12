@@ -8,6 +8,7 @@
     Player.prototype = {
         hp: 20,
         maxHP: 20,
+        invulnerable: false,
         sprite: new Sprite('img/wizard2.png', [110, 0], [55, 55]),
         moveSpeed: 300,
         bomb: null,
@@ -56,6 +57,15 @@
             hp = 0;
         };
         this.hp = hp;
+    };
+
+    Player.prototype.setInvulnerable = function(){
+        this.invulnerable = true;
+        setTimeout(this.unsetInvulnerable, 300);
+    };
+
+    Player.prototype.unsetInvulnerable = function() {
+      this.invulnerable = false;
     };
 
     Player.prototype.shotsFired = [];
