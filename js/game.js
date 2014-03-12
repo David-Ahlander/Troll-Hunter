@@ -503,7 +503,9 @@
                 that.level.player.score.trollScore += troll.killScore();
 
                 if (that.level.goalsFulfilled()) {
-                    that.nextLevel();
+
+                    that.showNewLevel();
+
                 } else {
                     setTimeout(function () {
                         that.level.spawnTroll({
@@ -514,6 +516,27 @@
             };
         });
     };
+
+    Game.prototype.showNewLevel = function () {
+
+        document.getElementById('newLevel').style.display = 'block';
+
+        var template = document.getElementById('newLevelTemplate').innerHTML;
+        document.getElementById('newLevel')
+        .innerHTML = Mustache.render(template, {
+            nr: this.level.nr + 1
+        });
+
+        var that = this;
+
+        setTimeout(function () {
+
+            document.getElementById('newLevel').style.display = 'none';
+
+            that.nextLevel();
+
+        }, 2000);
+    }
 
     Game.prototype.bulletsHitTree = function () {
         // Check if bullets hit trees
@@ -537,7 +560,7 @@
                         logger.debug('Destroyed tree at ' + tree.pos);
 
                         if (this.level.goalsFulfilled()) {
-                            this.nextLevel();
+                            this.showNewLevel();
                         }
                     }
 
