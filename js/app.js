@@ -39,8 +39,6 @@ function main() {
 };
 
 function init() {
-    terrainPattern = ctx.createPattern(resources.get('img/background.png'), 'repeat');
-
     document.getElementById('play-again').addEventListener('click', function() {
 
         location.reload(true);
@@ -64,7 +62,7 @@ resources.load([
     'img/blood.png',
     'img/wizard.png',
     'img/wizard2.png',
-    'img/background.png',
+    'img/level-1/background.png',
     'img/IonShot.png',
     'img/cave_spider.png',
     'img/bomb.png',
@@ -73,7 +71,6 @@ resources.load([
 resources.onReady(init);
 
 var lastFire = Date.now();
-var terrainPattern;
 
 var numOfSpiders = 5;
 

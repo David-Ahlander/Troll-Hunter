@@ -345,8 +345,10 @@
 
     // Draw everything
     Game.prototype.render = function () {
-        ctx.fillStyle = terrainPattern;
-        ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        //ctx.fillStyle = terrainPattern;
+        //ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         // Render the player if the game isn't over
         if(!this.isGameOver) {
