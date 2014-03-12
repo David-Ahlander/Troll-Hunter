@@ -56,7 +56,9 @@
         var template = document.getElementById('levelTemplate').innerHTML;
         document.getElementById('levelPanel')
             .innerHTML = Mustache.render(template, {
-                nr: this.level.nr
+                nr: this.level.nr,
+                hp: this.level.player.hp,
+                maxHp: this.level.player.maxHp
             });
 
         this.checkCollisions();

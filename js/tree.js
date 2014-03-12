@@ -3,7 +3,10 @@
         options = options || {};
         this.pos = options.pos || [0, 0];
         this.sprite = new Sprite('img/tree.png', [0, 0], [120, 108]);
-        this.healthBar = new HealthBar(this, [35, 0], [50, 5]);
+        this.healthBar = new HealthBar(this, {
+            pos: [35, 0],
+            size: [50, 5]
+        });
     }
 
     Tree.prototype = {

@@ -6,8 +6,10 @@
 
         this.setLevel(options.level || 1);
         this.hp = this.maxHp;
-        // Adds health bar to troll.
-        this.healthBar = new HealthBar(this, [50, 0], [120, 10]);
+        this.healthBar = new HealthBar(this, {
+            pos: [50, 0],
+            size: [120, 10]
+        });
     }
 
     Troll.prototype = {
