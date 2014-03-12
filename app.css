@@ -32,7 +32,8 @@ canvas {
 }
 
 #newLevel {
-    display: block;
+    visibility: hidden;
+    /*display: none;*/
     width: 307px;
     height: 98px;
     color: #000000;
@@ -44,6 +45,15 @@ canvas {
     bottom: 0;
     left: 0;
     right: 0;
+    -webkit-transition: 1s ease-out;
+    opacity: 0; 
+}
+
+#newLevel.active {
+    visibility: visible;
+    /*display: block;*/
+    -webkit-transition: 1s ease-out;
+    opacity: 1; 
 }
 
 aside {
