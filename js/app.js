@@ -93,6 +93,11 @@ var highscorePanel = new PanelView({
     template: document.getElementById('highscoreTemplate').innerHTML
 });
 
+var newLevelOverlay = new OverlayView({
+    element: document.getElementById('newLevel'),
+    template: document.getElementById('newLevelTemplate').innerHTML
+});
+
 function randomFromArray(array) {
     var index = Math.floor(Math.random() * array.length);
     return array[index];
