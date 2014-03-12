@@ -447,7 +447,8 @@
                 this.level.player.pos[0] = troll.pos[0] + troll.sprite.size[0] + 1;
             }
 
-            this.gameOver();
+            this.damagePlayer(this.level.player, troll.damage);
+            console.log(this.level.player.hp);
         }
     };
 
@@ -456,9 +457,17 @@
         for(var i=0;i<this.level.spiders.length;i++){
             var spider = this.level.spiders[i];
             if(spider && entitiesCollides(this.level.player, spider)) {
-                this.gameOver();
+                this.damagePlayer(this.level.player, spider.damage);
+                console.log(this.level.player.hp);
             }
         }
+    };
+
+    Game.prototype.damagePlayer = function(player, damage){
+        player.decreaseHp(damage);
+        if (player.hp <= 0){
+            this.gameOver();
+        };
     };
 
     Game.prototype.checkPickUpBomb = function () {

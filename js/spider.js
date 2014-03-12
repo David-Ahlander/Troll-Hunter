@@ -7,6 +7,7 @@
     Spider.prototype = {
         hp:    1,
         maxHp: 1,
+        damage: 1,
         delay: 500,
         speed: 200,
         sprite: new Sprite('img/cave_spider.png', [0, 0], [31, 31]),

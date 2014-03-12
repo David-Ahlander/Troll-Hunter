@@ -6,6 +6,8 @@
     }
 
     Player.prototype = {
+        hp: 20,
+        maxHP: 20,
         sprite: new Sprite('img/wizard2.png', [110, 0], [55, 55]),
         moveSpeed: 300,
         bomb: null,
@@ -46,6 +48,14 @@
                 direction = 'right'; break;
             }
             return direction;
+    };
+
+    Player.prototype.decreaseHp = function(damage){
+        var hp = this.hp - damage;
+        if(hp < 0){
+            hp = 0;
+        };
+        this.hp = hp;
     };
 
     Player.prototype.shotsFired = [];
