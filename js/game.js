@@ -6,10 +6,29 @@
         this.canvas = options.canvas;
         this.gameTime = 0;
         this.isGameOver = false;
-        this.reset();
+
+        document.getElementById('game-over').style.display = 'none';
+        document.getElementById('game-over-overlay').style.display = 'none';
+        this.isGameOver = false;
+        this.gameTime = 0;
+
+        this.nextLevel();
 
         highscore.add(this.level.player.score);
     }
+
+    Game.prototype.nextLevel = function () {
+        var currentLevelNr = this.level && this.level.nr || 0;
+        this.setLevel(currentLevelNr + 1);
+    };
+
+    Game.prototype.setLevel = function (nr) {
+        this.level = new Level({
+            nr: nr,
+            player: this.player,
+            canvas: this.canvas
+        });
+    };
 
     // Update game objects
     Game.prototype.update = function (dt) {
@@ -395,21 +414,6 @@
 
     };
 
-    // Reset game to original state
-    Game.prototype.reset = function () {
-
-        document.getElementById('game-over').style.display = 'none';
-        document.getElementById('game-over-overlay').style.display = 'none';
-        this.isGameOver = false;
-        this.gameTime = 0;
-
-        this.level = new Level({
-            nr: 1,
-            player: this.player,
-            canvas: this.canvas
-        });
-    };
-
     Game.prototype.checkHitTree = function (tree) {
         // Unable player to walk through trees
 
@@ -491,21 +495,22 @@
             if (troll && troll.hp <= 0) {
                 that.level.trolls.splice(index, 1);
 
+                that.level.trollsKilled += 1;
                 that.level.player.score.trollsKilled += 1;
 
                 logger.debug('Killed troll at ' + troll.pos);
 
                 that.level.player.score.trollScore += troll.killScore();
 
-                setTimeout(function () {
-                that.level.spawnTroll({
-                    level: troll.level + 1
-                });
-                }, 2000);
-
-            
-
-                //Increase level here
+                if (that.level.goalsFulfilled()) {
+                    that.nextLevel();
+                } else {
+                    setTimeout(function () {
+                        that.level.spawnTroll({
+                            level: troll.level + 1
+                        });
+                    }, 2000);
+                }
             };
         });
     };
@@ -531,6 +536,9 @@
 
                         logger.debug('Destroyed tree at ' + tree.pos);
 
+                        if (this.level.goalsFulfilled()) {
+                            this.nextLevel();
+                        }
                     }
 
                     // Add this.level.player.score.bulletHits
