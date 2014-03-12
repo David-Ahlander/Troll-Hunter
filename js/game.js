@@ -519,7 +519,9 @@
 
     Game.prototype.showNewLevel = function () {
 
-        document.getElementById('newLevel').style.display = 'block';
+
+
+        document.getElementById('newLevel').className = 'active';
 
         var template = document.getElementById('newLevelTemplate').innerHTML;
         document.getElementById('newLevel')
@@ -531,11 +533,12 @@
 
         setTimeout(function () {
 
-            document.getElementById('newLevel').style.display = 'none';
+            document.getElementById('newLevel').className = '';
 
             that.nextLevel();
 
         }, 2000);
+        // debugger;
     }
 
     Game.prototype.bulletsHitTree = function () {
