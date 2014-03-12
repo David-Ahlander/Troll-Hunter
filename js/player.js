@@ -61,11 +61,9 @@
 
     Player.prototype.setInvulnerable = function(){
         this.invulnerable = true;
-        setTimeout(this.unsetInvulnerable, 300);
-    };
-
-    Player.prototype.unsetInvulnerable = function() {
-      this.invulnerable = false;
+        setTimeout(function (player) {
+            player.invulnerable = false;
+        }, 300, this);
     };
 
     Player.prototype.shotsFired = [];
