@@ -584,6 +584,7 @@
     };
 
     Game.prototype.bulletsHitSpiders = function () {
+
         if (!this.level.spiders.length) return;
         // Check if bullets hit trees
         for(var j=0; j<this.level.player.shotsFired.length; j++) {
@@ -626,7 +627,9 @@
                     if(this.level.spiders.length < numOfSpiders)
                     {
                         var self = this;
+                        var levelNr = self.level.nr;
                         setTimeout(function () {
+                        if (levelNr != self.level.nr) return;
 
                             self.level.spawnSpider();
 
