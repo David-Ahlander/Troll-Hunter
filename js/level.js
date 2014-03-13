@@ -18,7 +18,8 @@
     }
 
     Level.prototype = {
-        trollsKilled: 0
+        trollsKilled: 0,
+        completed: false
     };
 
     Level.prototype.goalsFulfilled = function () {
@@ -34,7 +35,7 @@
     };
 
     Level.prototype.spawnEntities = function () {
-        this.player.pos = [50, this.canvas.height / 2];
+        this.player.pos = [20, this.canvas.height / 2];
 
         this.spawnCave();
 
