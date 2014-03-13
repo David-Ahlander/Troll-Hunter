@@ -31,6 +31,28 @@ canvas {
     right: 0;
 }
 
+#newLevel {
+    /*visibility: hidden;*/
+    width: 307px;
+    height: 98px;
+    color: #000000;
+    font-size: 4em;
+    z-index: 1;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    -webkit-transition: opacity 1s ease-out;
+    opacity: 0; 
+}
+
+#newLevel.active {
+    /*visibility: visible;*/
+    opacity: 1; 
+}
+
 aside {
     width: 200px;
     height: 600px;
@@ -78,7 +100,7 @@ header img {
 }
 
 #scorePanel {
-    margin-top: -6px;
+    margin-top: 14px;
 }
 
 .scoreBoard {
@@ -114,7 +136,7 @@ header img {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: 2;
     display: none;
 }
 
@@ -153,4 +175,8 @@ header img {
 
 #game-over .button:hover {
     color: #ffffff;
+}
+
+#play-again {
+    z-index: 2;
 }

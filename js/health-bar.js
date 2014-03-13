@@ -6,11 +6,12 @@
      * @params {array}  pos        Contains x and y coordinates. Example: [x, y]
      * @params {array}  size       Contains with and height. Example: [width, height]
      */
-    function HealthBar(character, pos, size) {
+    function HealthBar(character, options) {
         this.character = character;
 
-        this.pos = pos;
-        this.size = size;
+        this.pos       = options.pos;
+        this.size      = options.size;
+        this.color     = options.color || '#FF0000';
     }
 
     HealthBar.prototype.render = function(ctx) {
@@ -28,9 +29,9 @@
 
         // Draw a box inside the first one. If only 50% health left we only fill
         // 50% of the inner box with red color.
-        ctx.fillStyle="#FF0000";
+        ctx.fillStyle = this.color;
         ctx.fillRect(posX+1, posY+1,health*(width-2),height-2);
-    }
+    };
 
     window.HealthBar = HealthBar;
 })();

@@ -56,7 +56,9 @@
         var template = document.getElementById('levelTemplate').innerHTML;
         document.getElementById('levelPanel')
             .innerHTML = Mustache.render(template, {
-                nr: this.level.nr
+                nr: this.level.nr,
+                hp: this.level.player.hp,
+                maxHp: this.level.player.maxHp
             });
 
         this.checkCollisions();
@@ -470,8 +472,6 @@
     };
 
     Game.prototype.damagePlayer = function(player, damage){
-        var hpBefore = player.hp;
-        console.log("damagePlayer " + player.invulnerable);
         if(!player.invulnerable){
             player.decreaseHp(damage);
             if (player.hp <= 0){
@@ -510,7 +510,9 @@
                 that.level.player.score.trollScore += troll.killScore();
 
                 if (that.level.goalsFulfilled()) {
-                    that.nextLevel();
+
+                    that.showNewLevel();
+
                 } else {
                     setTimeout(function () {
                         that.level.spawnTroll({
@@ -521,6 +523,30 @@
             };
         });
     };
+
+    Game.prototype.showNewLevel = function () {
+
+
+
+        document.getElementById('newLevel').className = 'active';
+
+        var template = document.getElementById('newLevelTemplate').innerHTML;
+        document.getElementById('newLevel')
+        .innerHTML = Mustache.render(template, {
+            nr: this.level.nr + 1
+        });
+
+        var that = this;
+
+        setTimeout(function () {
+
+            document.getElementById('newLevel').className = '';
+
+            that.nextLevel();
+
+        }, 2000);
+        // debugger;
+    }
 
     Game.prototype.bulletsHitTree = function () {
         // Check if bullets hit trees
@@ -544,7 +570,7 @@
                         logger.debug('Destroyed tree at ' + tree.pos);
 
                         if (this.level.goalsFulfilled()) {
-                            this.nextLevel();
+                            this.showNewLevel();
                         }
                     }
 
