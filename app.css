@@ -41,7 +41,8 @@ canvas {
 
 #newLevel {
     /*visibility: hidden;*/
-    width: 307px;
+    width: 100%;
+    text-align: center;
     height: 98px;
     color: #000000;
     font-size: 4em;
