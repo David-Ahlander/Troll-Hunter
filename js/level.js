@@ -13,6 +13,8 @@
         this.trees      = [];
         this.bombs      = [];
         this.spawnEntities();
+
+        document.getElementById('game-box').className = 'level-' + this.nr;
     }
 
     Level.prototype = {

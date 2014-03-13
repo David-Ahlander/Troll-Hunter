@@ -20,6 +20,14 @@ h3 {
     margin-bottom: 10px;
 }
 
+#game-box canvas {
+  background-repeat: repeat;
+  background-image: url('img/level-1/background.png'); /* default */
+}
+#game-box.level-1 canvas {
+  background-image: url('img/level-1/background.png');
+}
+
 canvas {
     display: block;
     margin: auto;
