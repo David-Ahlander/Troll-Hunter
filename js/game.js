@@ -42,24 +42,17 @@
 
         this.updateEntities(dt);
 
-        var template = document.getElementById('scoreTemplate').innerHTML;
+        levelPanel.render({
+            nr: this.level.nr,
+            hp: this.level.player.hp,
+            maxHp: this.level.player.maxHp
+        });
 
-        document.getElementById('scorePanel')
-            .innerHTML = Mustache.render(template, this.level.player.score.calculate());
+        scorePanel.render(this.level.player.score.calculate());
 
-        var template = document.getElementById('highscoreTemplate').innerHTML;
-        document.getElementById('highscore')
-            .innerHTML = Mustache.render(template, {
-                list: highscore.sort().take(5)
-            });
-
-        var template = document.getElementById('levelTemplate').innerHTML;
-        document.getElementById('levelPanel')
-            .innerHTML = Mustache.render(template, {
-                nr: this.level.nr,
-                hp: this.level.player.hp,
-                maxHp: this.level.player.maxHp
-            });
+        highscorePanel.render({
+            list: highscore.sort().take(5)
+        });
 
         this.checkCollisions();
 

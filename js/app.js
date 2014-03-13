@@ -78,6 +78,21 @@ var highscore = new Highscore;
 
 var game;
 
+var levelPanel = new PanelView({
+    element:  document.getElementById('levelPanel'),
+    template: document.getElementById('levelTemplate').innerHTML
+});
+
+var scorePanel = new PanelView({
+    element:  document.getElementById('scorePanel'),
+    template: document.getElementById('scoreTemplate').innerHTML
+});
+
+var highscorePanel = new PanelView({
+    element:  document.getElementById('highscore'),
+    template: document.getElementById('highscoreTemplate').innerHTML
+});
+
 function randomFromArray(array) {
     var index = Math.floor(Math.random() * array.length);
     return array[index];
