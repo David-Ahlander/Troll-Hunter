@@ -69,7 +69,7 @@
         this.invulnerable = true;
         setTimeout(function (player) {
             player.invulnerable = false;
-        }, 300, this);
+        }, 1000, this);
     };
 
     Player.prototype.shotsFired = [];

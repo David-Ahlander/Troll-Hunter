@@ -466,7 +466,9 @@
             var spider = this.level.spiders[i];
             if(spider && entitiesCollides(this.level.player, spider)) {
                 this.damagePlayer(this.level.player, spider.damage);
-                console.log(this.level.player.hp);
+                if(!this.level.player.invulnerable){
+                    this.level.player.setInvulnerable();
+                }
             }
         }
     };
