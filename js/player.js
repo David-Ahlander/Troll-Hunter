@@ -57,6 +57,7 @@
     };
 
     Player.prototype.decreaseHp = function(damage){
+
         var hp = this.hp - damage;
         if(hp < 0){
             hp = 0;
@@ -68,7 +69,7 @@
         this.invulnerable = true;
         setTimeout(function (player) {
             player.invulnerable = false;
-        }, 300, this);
+        }, 1000, this);
     };
 
     Player.prototype.shotsFired = [];
