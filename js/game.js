@@ -348,13 +348,13 @@
             for (var n = 0; n < this.level.caves.length; n++) {
                 this.renderEntity(this.level.caves[n]);
             }
-            this.renderEntity(this.level.player);
             for (var n = 0; n < this.level.trees.length; n++) {
                 this.renderEntity(this.level.trees[n]);
             }
             for (var n = 0; n < this.level.trolls.length; n++) {
                 this.renderEntity(this.level.trolls[n]);
             }
+            this.renderEntity(this.level.player);
         }
 
         this.renderEntities(this.level.player.shotsFired);
@@ -506,12 +506,15 @@
 
                 that.level.player.score.trollScore += troll.killScore();
 
-                if (that.level.goalsFulfilled()) {
+                if (!that.level.completed && that.level.goalsFulfilled()) {
 
                     that.showNewLevel();
+                    that.level.completed = true;
 
                 } else {
+                    var levelNr = that.level.nr;
                     setTimeout(function () {
+                        if (levelNr != that.level.nr) return;
                         that.level.spawnTroll({
                             level: troll.level + 1
                         });
@@ -553,8 +556,9 @@
 
                         logger.debug('Destroyed tree at ' + tree.pos);
 
-                        if (this.level.goalsFulfilled()) {
+                        if (!this.level.completed && this.level.goalsFulfilled()) {
                             this.showNewLevel();
+                            this.level.completed = true;
                         }
                     }
 
@@ -624,7 +628,7 @@
                         var self = this;
                         setTimeout(function () {
 
-                        self.level.spawnSpider();
+                            self.level.spawnSpider();
 
                         }, 7000);
                     }

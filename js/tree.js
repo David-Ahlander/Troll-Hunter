@@ -23,7 +23,7 @@
     }
 
     Tree.prototype.randomizePosition = function () {
-        this.pos = [Math.random() * 680, Math.random() * 492];
+        this.pos = [(Math.random() * 580) +100, Math.random() * 492];
         return this;
     };
 
