@@ -522,27 +522,14 @@
     };
 
     Game.prototype.showNewLevel = function () {
-
-
-
-        document.getElementById('newLevel').className = 'active';
-
-        var template = document.getElementById('newLevelTemplate').innerHTML;
-        document.getElementById('newLevel')
-        .innerHTML = Mustache.render(template, {
+        newLevelOverlay.render({
             nr: this.level.nr + 1
         });
 
-        var that = this;
-
-        setTimeout(function () {
-
-            document.getElementById('newLevel').className = '';
-
-            that.nextLevel();
-
-        }, 2000);
-        // debugger;
+        setTimeout(function (game) {
+            newLevelOverlay.unrender();
+            game.nextLevel();
+        }, 2000, this);
     }
 
     Game.prototype.bulletsHitTree = function () {
