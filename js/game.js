@@ -610,7 +610,7 @@
                     // Remove the bullet and stop this iteration
                     this.level.player.shotsFired.splice(j, 1);
 
-                    if(Math.floor((Math.random()*1)+1)==1)
+                    if(Math.floor((Math.random()*10)+1)==1)
                     {
                         this.level.bombs.push({
                             pos: this.level.spiders[i].pos,

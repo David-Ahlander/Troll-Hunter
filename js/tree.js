@@ -10,8 +10,8 @@
     }
 
     Tree.prototype = {
-        hp: 1,
-        maxHp: 1,
+        hp: 100,
+        maxHp: 100,
         killed: false
     };
 

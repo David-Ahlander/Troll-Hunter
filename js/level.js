@@ -44,10 +44,10 @@
         this.spawnTree();
 
         this.spawnSpider();
-        // this.spawnSpider();
-        // this.spawnSpider();
-        // this.spawnSpider();
-        // this.spawnSpider();
+        this.spawnSpider();
+        this.spawnSpider();
+        this.spawnSpider();
+        this.spawnSpider();
 
         this.spawnTroll();
     };
