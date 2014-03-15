@@ -23,8 +23,11 @@
     };
 
     Game.prototype.setLevel = function (nr) {
-        this.level = new Level({
-            nr: nr,
+        if (!Level[nr]) {
+            this.gameOver();
+            return;
+        }
+        this.level = new Level[nr]({
             player: this.player,
             canvas: this.canvas
         });
