@@ -1,7 +1,6 @@
 (function () {
     function levelMixin() {
         this.init           = init;
-        this.goalsFulfilled = goalsFulfilled;
         this.allTreesDead   = allTreesDead;
         this.spawnEntities  = spawnEntities;
         this.spawnCave      = spawnCave;
@@ -30,11 +29,6 @@
         this.completed    = false
 
         document.getElementById('game-box').className = 'level-' + this.nr;
-    }
-
-    function goalsFulfilled() {
-        return this.trollsKilled >= 2 &&
-               this.allTreesDead();
     }
 
     function allTreesDead() {

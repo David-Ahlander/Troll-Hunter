@@ -1,5 +1,5 @@
 (function() {
-    var nr = 1;
+    var nr = 2;
 
     function Level(options) {
         options = options || {};
@@ -10,8 +10,7 @@
     levelMixin.call(Level.prototype);
 
     Level.prototype.goalsFulfilled = function () {
-        return this.trollsKilled >= 2 &&
-               this.allTreesDead();
+        return false; // Can never leave level 2
     };
 
     window.Level[nr] = Level;
