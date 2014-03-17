@@ -138,7 +138,7 @@ header img {
 
 #game-over, #game-over-overlay {
     margin: auto;
-    width: 1200px;
+    max-width: 1200px;
     height: 600px;
     position: absolute;
     top: 0;
