@@ -8,11 +8,15 @@
     };
 
     levelMixin.call(Level.prototype);
+    levelGoalsMixin.call(Level.prototype);
 
-    Level.prototype.goalsFulfilled = function () {
-        return this.trollsKilled >= 2 &&
-               this.allTreesDead();
-    };
+    Level.prototype
+        .addGoal('Döda två troll', function () {
+            return this.trollsKilled >= 2;
+        })
+        .addGoal('Förstör alla träd', function () {
+            return this.allTreesDead();
+        });
 
     window.Level[nr] = Level;
 })();

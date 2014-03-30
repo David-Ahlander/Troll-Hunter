@@ -8,10 +8,7 @@
     };
 
     levelMixin.call(Level.prototype);
-
-    Level.prototype.goalsFulfilled = function () {
-        return false; // Can never leave level 2
-    };
+    levelGoalsMixin.call(Level.prototype);
 
     window.Level[nr] = Level;
 })();

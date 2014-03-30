@@ -48,7 +48,8 @@
         levelPanel.render({
             nr: this.level.nr,
             hp: this.level.player.hp,
-            maxHp: this.level.player.maxHp
+            maxHp: this.level.player.maxHp,
+            goals: this.level.goals
         });
 
         scorePanel.render(this.level.player.score.calculate());
